@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ImagesTrainer</string>
+    <string name="app_name">Images Trainer</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_encoding">EncodingActivity</string>
-    <string name="title_activity_decoding">DecodingActivity</string>
+    <string name="title_activity_encoding">Encoding</string>
+    <string name="title_activity_decoding">Decoding</string>
 
 </resources>

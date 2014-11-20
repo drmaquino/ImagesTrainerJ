@@ -14,25 +14,28 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".EncodingActivity"
             android:label="@string/title_activity_encoding"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="main.controllers.MainActivity" />
+                android:value="main.controllers.HomeActivity" />
         </activity>
         <activity
             android:name=".DecodingActivity"
-            android:label="@string/title_activity_decoding" >
+            android:label="@string/title_activity_decoding"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="main.controllers.HomeActivity" />
         </activity>
     </application>
 
