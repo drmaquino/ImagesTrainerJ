@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="ENCODING"
+        android:text="@string/title_activity_encoding"
         android:textColor="@android:color/white"
         android:onClick="launchEncodingActivity" />
 
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="DECODING"
+        android:text="@string/title_activity_decoding"
         android:textColor="@android:color/white"
         android:onClick="launchDecodingActivity" />
 

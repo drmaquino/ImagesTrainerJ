@@ -22,22 +22,14 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int bb=0x7f020000;
-        public static final int bc=0x7f020001;
-        public static final int bd=0x7f020002;
-        public static final int be=0x7f020003;
-        public static final int bf=0x7f020004;
-        public static final int bg=0x7f020005;
-        public static final int bh=0x7f020006;
-        public static final int bi=0x7f020007;
-        public static final int ic_launcher=0x7f020008;
+        public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
         public static final int action_settings=0x7f080005;
-        public static final int button1=0x7f080001;
-        public static final int button2=0x7f080002;
-        public static final int button3=0x7f080003;
-        public static final int button4=0x7f080004;
+        public static final int btn1=0x7f080001;
+        public static final int btn2=0x7f080002;
+        public static final int btn3=0x7f080003;
+        public static final int btn4=0x7f080004;
         public static final int current_pair=0x7f080000;
     }
     public static final class layout {
@@ -53,6 +45,7 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050002;
         public static final int app_name=0x7f050000;
+        public static final int default_description=0x7f050005;
         public static final int hello_world=0x7f050001;
         public static final int title_activity_decoding=0x7f050004;
         public static final int title_activity_encoding=0x7f050003;
