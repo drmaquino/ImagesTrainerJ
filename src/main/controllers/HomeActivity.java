@@ -26,4 +26,10 @@ public class HomeActivity extends Activity
         Intent intent = new Intent(this, DecodingActivity.class);
         startActivity(intent);
     }
+    
+    public void launchTimeAttackActivity(View view)
+    {
+        Intent intent = new Intent(this, TimeAttackActivity.class);
+        startActivity(intent);
+    }
 }
