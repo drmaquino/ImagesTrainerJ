@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class HomeActivity extends Activity
 {
@@ -17,14 +18,16 @@ public class HomeActivity extends Activity
     
     public void launchEncodingActivity(View view)
     {
-        Intent intent = new Intent(this, EncodingActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, EncodingActivity.class);
+//        startActivity(intent);
+        Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
     }
     
     public void launchDecodingActivity(View view)
     {
-        Intent intent = new Intent(this, DecodingActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, DecodingActivity.class);
+//        startActivity(intent);
+        Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
     }
     
     public void launchTimeAttackActivity(View view)
