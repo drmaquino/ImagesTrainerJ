@@ -217,7 +217,7 @@ public class TimeAttackActivity extends Activity
     {
         Builder dbError = new AlertDialog.Builder(this);
         dbError.setTitle("Imagen incorrecta");
-        dbError.setMessage("Lo siento, has cometido un error.");
+        dbError.setMessage(String.format("Lo siento, has cometido un error.\nResultado: %s correctas.\n(Total de imagenes: %s)", imagenesUsadas.size(), imagenesExtras.size() + 4));
         dbError.setPositiveButton("Volver a empezar", new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int whichButton)
