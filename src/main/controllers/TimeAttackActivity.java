@@ -168,6 +168,7 @@ public class TimeAttackActivity extends Activity
         {
             imagenes.add(imagenCorrecta);
             crearDialogoError().show();
+            return;
         }
 
         imagenesParaMostrar.remove(imagenCorrecta);
