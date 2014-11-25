@@ -22,9 +22,9 @@ public class HomeActivity extends Activity
 
 	public void launchEncodingActivity(View view)
 	{
-		// Intent intent = new Intent(this, EncodingActivity.class);
-		// startActivity(intent);
-		Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
+		 Intent intent = new Intent(this, EncodingActivity.class);
+		 startActivity(intent);
+//		Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
 	}
 
 	public void launchDecodingActivity(View view)
