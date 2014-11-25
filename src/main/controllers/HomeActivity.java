@@ -1,14 +1,10 @@
 package main.controllers;
 
-import java.util.List;
-
 import main.helper.IOHelper;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class HomeActivity extends Activity
@@ -20,7 +16,6 @@ public class HomeActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		ImageButton ib = (ImageButton) findViewById(R.id.my_image_button);
 		ioh = new IOHelper(getBaseContext());
 		ioh.createGameFolder();
 	}
