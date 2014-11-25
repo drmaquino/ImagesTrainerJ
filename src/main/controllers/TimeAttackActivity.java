@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import main.helper.Timer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -32,7 +33,7 @@ public class TimeAttackActivity extends Activity
     private List<String> imagenesParaMostrar;
     private List<String> imagenesUsadas;
     private String imagenCorrecta;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -61,6 +62,8 @@ public class TimeAttackActivity extends Activity
         prepararImagenesParaMostrar();
         mostrarImagenesPorPantalla();
         mostrarElParQueDeseoEvaluar();
+        
+        Timer.start();
     }
 
     private void cargarImagenes()
@@ -189,9 +192,13 @@ public class TimeAttackActivity extends Activity
 
     private AlertDialog crearDialogofinDelJuego()
     {
+    	Timer.stop();
+    	double elapsedTime = Timer.getTime();
+    	Timer.reset();
+    	
         Builder dbConfirmacionReinicio = new AlertDialog.Builder(this);
         dbConfirmacionReinicio.setTitle("Felicitaciones!");
-        dbConfirmacionReinicio.setMessage("Has acertado todas las imagenes!");
+        dbConfirmacionReinicio.setMessage(String.format("Has acertado todas las imagenes en %.2f segundos!", elapsedTime));
         dbConfirmacionReinicio.setIcon(R.drawable.ic_launcher);
         dbConfirmacionReinicio.setPositiveButton("Volver a empezar", new DialogInterface.OnClickListener()
         {
@@ -215,9 +222,19 @@ public class TimeAttackActivity extends Activity
     
     private AlertDialog crearDialogoError()
     {
+    	Timer.stop();
+    	double elapsedTime = Timer.getTime();
+    	Timer.reset();
+    	
         Builder dbError = new AlertDialog.Builder(this);
         dbError.setTitle("Imagen incorrecta");
-        dbError.setMessage(String.format("Lo siento, has cometido un error.\nResultado: %s correctas.\n(Total de imagenes: %s)", imagenesUsadas.size(), imagenesExtras.size() + 4));
+        dbError.setMessage(String.format("Lo siento, has cometido un error."
+        								+ "\nTiempo total: %.2f."
+        								+ "\nResultado: %s correctas."
+        								+ "\n(Total de imagenes: %s)",
+        								elapsedTime,
+        								imagenesUsadas.size(),
+        								imagenesExtras.size() + 4));
         dbError.setPositiveButton("Volver a empezar", new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int whichButton)
