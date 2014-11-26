@@ -12,16 +12,6 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.widget.Toast;
 
-/**
- * Ejemplo de uso:
- * 
- * IOHelper ioh = new IOHelper(this); File file = ioh.createLogFile("logs",
- * "log"); ioh.saveToFile(file, "linea 1", true); ioh.saveToFile(file,
- * "linea 2", true); ioh.saveToFile(file, "linea 3", true); String texto =
- * ioh.readFile(file); Toast.makeText(getBaseContext(), texto,
- * Toast.LENGTH_LONG).show();
- */
-
 public class IOHelper
 {
 	private static final String IMAGES_FOLDER = "com.imagetrainer.imagenes";
@@ -58,8 +48,6 @@ public class IOHelper
 		try
 		{
 			FileOutputStream fos = new FileOutputStream(file, append);
-			// esto deberia hacer que se puedan grabar caracteres utf8 pero no
-			// funciona
 			OutputStreamWriter myOutWriter = new OutputStreamWriter(fos);
 			myOutWriter.append(texto);
 			myOutWriter.append("\n");
