@@ -124,7 +124,7 @@ public class EncodingActivity extends Activity
 
 	private void mostrarElParQueDeseoEvaluar()
 	{
-		tvCurrentPair.setText(imagenCorrecta.substring(0, 2).toUpperCase());
+		tvCurrentPair.setText(imagenCorrecta.split("\\.")[0].toUpperCase());
 	}
 
 	public void buttonClick(View v)
