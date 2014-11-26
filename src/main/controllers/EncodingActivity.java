@@ -1,7 +1,5 @@
 package main.controllers;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +12,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -115,14 +112,6 @@ public class EncodingActivity extends Activity
 			ImageButton imageButton = imageButtons.get(i);
 			String image = imagenesParaMostrar.get(i);
 			
-//			Drawable imgDrawable = getDrawableByName(image);
-			
-//			if (imgDrawable != null)
-//			{
-//				imageButton.setImageDrawable(imgDrawable);
-//				imageButton.setContentDescription(image);
-//			}
-			
 			Bitmap imgBitmap = ioh.getBitmapFromImagesFolder(image);
 			
 			if (imgBitmap!= null)
@@ -131,20 +120,6 @@ public class EncodingActivity extends Activity
 				imageButton.setContentDescription(image);
 			}
 		}
-	}
-
-	private Drawable getDrawableByName(String imageName)
-	{
-		Drawable result = null;
-		try
-		{
-			InputStream inputStream = getAssets().open(imageName);
-			result = Drawable.createFromStream(inputStream, null);
-		}
-		catch (IOException e)
-		{
-		}
-		return result;
 	}
 
 	private void mostrarElParQueDeseoEvaluar()
@@ -226,7 +201,12 @@ public class EncodingActivity extends Activity
 
 		Builder dbError = new AlertDialog.Builder(this);
 		dbError.setTitle("Imagen incorrecta");
-		dbError.setMessage(String.format("Lo siento, has cometido un error." + "\nTiempo total: %.2f." + "\nResultado: %s correctas." + "\n(Total de imagenes: %s)", elapsedTime, imagenesUsadas.size(), imagenesExtras.size() + 4));
+		String msg = "";
+		msg += "Lo siento, has cometido un error.";
+		msg += "\nTiempo total: %.2f.";
+		msg += "\nResultado: %s correctas.";
+		msg += "\n(Total de imagenes: %s)";
+		dbError.setMessage(String.format(msg, elapsedTime, imagenesUsadas.size(), imagenesExtras.size() + 4));
 		dbError.setPositiveButton("Volver a empezar", new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface dialog, int whichButton)
