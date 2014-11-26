@@ -38,7 +38,7 @@ public class EncodingActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_encoding);
-		
+
 		ioh = new IOHelper(this);
 
 		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
@@ -111,10 +111,10 @@ public class EncodingActivity extends Activity
 		{
 			ImageButton imageButton = imageButtons.get(i);
 			String image = imagenesParaMostrar.get(i);
-			
+
 			Bitmap imgBitmap = ioh.getBitmapFromImagesFolder(image);
-			
-			if (imgBitmap!= null)
+
+			if (imgBitmap != null)
 			{
 				imageButton.setImageBitmap(imgBitmap);
 				imageButton.setContentDescription(image);
@@ -124,13 +124,26 @@ public class EncodingActivity extends Activity
 
 	private void mostrarElParQueDeseoEvaluar()
 	{
-		tvCurrentPair.setText(imagenCorrecta.split("\\.")[0].toUpperCase());
+		String msg;
+		if (imagenCorrecta != null)
+		{
+			msg = imagenCorrecta.split("\\.")[0].toUpperCase();
+		}
+		else
+		{
+			msg = "no se han encontrado imágenes en la carpeta \"com.imagestrainer.imagenes\"";
+		}
+		tvCurrentPair.setText(msg);
 	}
 
 	public void buttonClick(View v)
 	{
 		ImageButton button = (ImageButton) v;
 		String userSelectedPair = (String) button.getContentDescription();
+		if (userSelectedPair.equals("error"))
+		{
+			return;
+		}
 		chequearRespuesta(userSelectedPair);
 	}
 
