@@ -124,16 +124,14 @@ public class EncodingActivity extends Activity
 
 	private void mostrarElParQueDeseoEvaluar()
 	{
-		String msg;
 		if (imagenCorrecta != null)
 		{
-			msg = imagenCorrecta.split("\\.")[0].toUpperCase();
+			tvCurrentPair.setText(imagenCorrecta.split("\\.")[0].toUpperCase());
 		}
 		else
 		{
-			msg = "no se han encontrado imágenes en la carpeta \"com.imagestrainer.imagenes\"";
+			crearDialogoNoHayImagenes().show();
 		}
-		tvCurrentPair.setText(msg);
 	}
 
 	public void buttonClick(View v)
@@ -238,5 +236,29 @@ public class EncodingActivity extends Activity
 			}
 		});
 		return dbError.create();
+	}
+	
+	private AlertDialog crearDialogoNoHayImagenes()
+	{
+		Timer.stop();
+		double elapsedTime = Timer.getTime();
+		Timer.reset();
+
+		Builder dbNoImages = new AlertDialog.Builder(this);
+		dbNoImages.setTitle("Carpeta vacía");
+		String msg = "";
+		msg += "Lo siento, no se han encontrado";
+		msg += "\nimagenes en la carpeta:";
+		msg += "\ncom.imagestrainer.imagenes";
+		dbNoImages.setMessage(msg);
+		dbNoImages.setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int whichButton)
+			{
+				dialog.dismiss();
+				finish();
+			}
+		});
+		return dbNoImages.create();
 	}
 }
