@@ -33,14 +33,6 @@
                 android:value="main.controllers.HomeActivity" />
         </activity>
         <activity
-            android:name=".TimeAttackActivity"
-            android:label="@string/title_activity_time_attack"
-            android:parentActivityName=".HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="main.controllers.HomeActivity" />
-        </activity>
-        <activity
             android:name=".DecodingActivity"
             android:label="@string/title_activity_decoding"
             android:parentActivityName=".HomeActivity" >
