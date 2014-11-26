@@ -24,7 +24,6 @@ public class HomeActivity extends Activity
 	{
 		 Intent intent = new Intent(this, EncodingActivity.class);
 		 startActivity(intent);
-//		Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
 	}
 
 	public void launchDecodingActivity(View view)
@@ -33,11 +32,4 @@ public class HomeActivity extends Activity
 		// startActivity(intent);
 		Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
 	}
-
-	public void launchTimeAttackActivity(View view)
-	{
-		Intent intent = new Intent(this, TimeAttackActivity.class);
-		startActivity(intent);
-	}
-
 }

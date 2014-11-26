@@ -6,7 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_encoding">Encoding</string>
     <string name="title_activity_decoding">Decoding</string>
-    <string name="title_activity_time_attack">Time Attack!</string>
     <string name="default_description">error</string>
 
 </resources>

@@ -25,13 +25,4 @@
         android:onClick="launchDecodingActivity"
         android:text="@string/title_activity_decoding"
         android:textColor="@android:color/white" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="launchTimeAttackActivity"
-        android:text="@string/title_activity_time_attack"
-        android:textColor="@android:color/white" />
-
-</LinearLayout>
+</LinearLayout>
