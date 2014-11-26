@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class IOHelper
 {
-	private static final String IMAGES_FOLDER = "com.imagetrainer.imagenes";
+	private static final String IMAGES_FOLDER = "com.imagestrainer.imagenes";
 	private Context _context;
 	private String _externalStoragePath;
 
