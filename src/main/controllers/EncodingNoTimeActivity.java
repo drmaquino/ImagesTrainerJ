@@ -226,40 +226,6 @@ public class EncodingNoTimeActivity extends Activity
 		return dbConfirmacionReinicio.create();
 	}
 
-	private AlertDialog crearDialogoError()
-	{
-		Timer.stop();
-		double elapsedTime = Timer.getTime();
-		Timer.reset();
-
-		Builder dbError = new AlertDialog.Builder(this);
-		dbError.setTitle("Imagen incorrecta");
-		String msg = "";
-		msg += "Lo siento, has cometido un error.";
-		msg += "\nTiempo total: %.2f.";
-		msg += "\nResultado: %s correctas.";
-		msg += "\n(Total de imagenes: %s)";
-		dbError.setMessage(String.format(msg, elapsedTime, imagenesUsadas.size(), imagenesExtras.size() + 4));
-		dbError.setPositiveButton("Volver a empezar", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int whichButton)
-			{
-				dialog.dismiss();
-				finish();
-				startActivity(getIntent());
-			}
-		});
-		dbError.setNegativeButton("Salir", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int which)
-			{
-				dialog.dismiss();
-				finish();
-			}
-		});
-		return dbError.create();
-	}
-
 	private AlertDialog crearDialogoNoHayImagenes()
 	{
 		Timer.stop();
