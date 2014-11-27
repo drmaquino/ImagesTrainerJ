@@ -20,6 +20,9 @@ import android.widget.TextView;
 public class EncodingNoTimeActivity extends Activity
 {
 	private TextView tvCurrentPair;
+	private TextView tvCurrentCorrect;
+	private TextView tvCurrentIncorrect;
+
 	private List<ImageButton> imageButtons;
 	private ImageButton btn1;
 	private ImageButton btn2;
@@ -32,6 +35,8 @@ public class EncodingNoTimeActivity extends Activity
 	private List<String> imagenesUsadas;
 	private String imagenCorrecta;
 	private IOHelper ioh;
+	private int imagenesCorrectas;
+	private int imagenesIncorrectas;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -42,6 +47,8 @@ public class EncodingNoTimeActivity extends Activity
 		ioh = new IOHelper(this);
 
 		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
+		tvCurrentCorrect = (TextView) findViewById(R.id.current_correct);
+		tvCurrentIncorrect = (TextView) findViewById(R.id.current_incorrect);
 
 		imagenes = new ArrayList<String>();
 		imagenesExtras = new ArrayList<String>();
@@ -63,8 +70,22 @@ public class EncodingNoTimeActivity extends Activity
 		prepararImagenesParaMostrar();
 		mostrarImagenesPorPantalla();
 		mostrarElParQueDeseoEvaluar();
+		inicializarContadores();
+		actualizarContadores();
 
 		Timer.start();
+	}
+
+	private void inicializarContadores()
+	{
+		imagenesCorrectas = 0;
+		imagenesIncorrectas = 0;
+	}
+
+	private void actualizarContadores()
+	{
+		tvCurrentCorrect.setText(String.format("Correctas: %s", imagenesCorrectas));
+		tvCurrentIncorrect.setText(String.format("Incorrectas: %s", imagenesIncorrectas));
 	}
 
 	private void cargarImagenes()
@@ -150,14 +171,15 @@ public class EncodingNoTimeActivity extends Activity
 		if (imagenCorrecta.equals(userSelectedPair))
 		{
 			imagenesUsadas.add(imagenCorrecta);
+			imagenesCorrectas++;
 		}
 		else
 		{
 			imagenes.add(imagenCorrecta);
-			crearDialogoError().show();
-			return;
+			imagenesIncorrectas++;
 		}
-
+		actualizarContadores();
+		
 		imagenesParaMostrar.remove(imagenCorrecta);
 		imagenesExtras.addAll(imagenesParaMostrar);
 		imagenesParaMostrar = new ArrayList<String>();
@@ -237,7 +259,7 @@ public class EncodingNoTimeActivity extends Activity
 		});
 		return dbError.create();
 	}
-	
+
 	private AlertDialog crearDialogoNoHayImagenes()
 	{
 		Timer.stop();
