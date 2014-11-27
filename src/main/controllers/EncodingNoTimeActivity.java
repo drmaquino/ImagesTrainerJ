@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import main.helper.IOHelper;
-import main.helper.Timer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -72,8 +71,6 @@ public class EncodingNoTimeActivity extends Activity
 		mostrarElParQueDeseoEvaluar();
 		inicializarContadores();
 		actualizarContadores();
-
-		Timer.start();
 	}
 
 	private void inicializarContadores()
@@ -198,13 +195,9 @@ public class EncodingNoTimeActivity extends Activity
 
 	private AlertDialog crearDialogofinDelJuego()
 	{
-		Timer.stop();
-		double elapsedTime = Timer.getTime();
-		Timer.reset();
-
 		Builder dbConfirmacionReinicio = new AlertDialog.Builder(this);
-		dbConfirmacionReinicio.setTitle("Felicitaciones!");
-		dbConfirmacionReinicio.setMessage(String.format("Has acertado todas las imagenes en %.2f segundos!", elapsedTime));
+		dbConfirmacionReinicio.setTitle("Fin del juego");
+		dbConfirmacionReinicio.setMessage("Has llegado al final de la lista!");
 		dbConfirmacionReinicio.setIcon(R.drawable.ic_launcher);
 		dbConfirmacionReinicio.setPositiveButton("Volver a empezar", new DialogInterface.OnClickListener()
 		{
@@ -228,10 +221,6 @@ public class EncodingNoTimeActivity extends Activity
 
 	private AlertDialog crearDialogoNoHayImagenes()
 	{
-		Timer.stop();
-		double elapsedTime = Timer.getTime();
-		Timer.reset();
-
 		Builder dbNoImages = new AlertDialog.Builder(this);
 		dbNoImages.setTitle("Carpeta vacía");
 		String msg = "";
