@@ -17,6 +17,14 @@
         android:onClick="launchEncodingActivity"
         android:text="@string/title_activity_encoding"
         android:textColor="@android:color/white" />
+    
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="launchEncodingNoTimeActivity"
+        android:text="@string/title_activity_encoding_no_time"
+        android:textColor="@android:color/white" />
 
     <Button
         android:layout_width="match_parent"

@@ -25,6 +25,12 @@ public class HomeActivity extends Activity
 		 Intent intent = new Intent(this, EncodingActivity.class);
 		 startActivity(intent);
 	}
+	
+	public void launchEncodingNoTimeActivity(View view)
+	{
+		 Intent intent = new Intent(this, EncodingNoTimeActivity.class);
+		 startActivity(intent);
+	}
 
 	public void launchDecodingActivity(View view)
 	{
