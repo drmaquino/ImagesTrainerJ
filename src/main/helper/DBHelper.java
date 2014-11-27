@@ -125,7 +125,7 @@ public class DBHelper extends SQLiteOpenHelper
 		return db.update(TABLE_IMAGES, values, KEY_ID + " = ?", new String[] { String.valueOf(imagen.get_id()) });
 	}
 
-	public void deleteTabajo(MemoImage imagen)
+	public void deleteImagen(MemoImage imagen)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_IMAGES, KEY_ID + " = ?", new String[] { String.valueOf(imagen.get_id()) });
