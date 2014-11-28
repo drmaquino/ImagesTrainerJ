@@ -94,14 +94,20 @@ public class EncodingActivity extends Activity
 	{
 		List<String> imagesInGameFolder = ioh.getListImagesInGameFolder();
 		imagenesExtras.addAll(imagesInGameFolder);
-		
-		if (dbh.getImagenesCount() == 0)
+		if (imagenesExtras.size() < 4)
 		{
-			imagenes.addAll(imagesInGameFolder);
+			crearDialogoNoHayImagenes().show();
 		}
 		else
 		{
-			loadState();
+			if (dbh.getImagenesCount() == 0)
+			{
+				imagenes.addAll(imagesInGameFolder);
+			}
+			else
+			{
+				loadState();
+			}
 		}
 	}
 
@@ -158,10 +164,6 @@ public class EncodingActivity extends Activity
 		if (imagenCorrecta != null)
 		{
 			tvCurrentPair.setText(imagenCorrecta.split("\\.")[0].toUpperCase());
-		}
-		else
-		{
-			crearDialogoNoHayImagenes().show();
 		}
 	}
 
@@ -238,8 +240,8 @@ public class EncodingActivity extends Activity
 		Builder dbNoImages = new AlertDialog.Builder(this);
 		dbNoImages.setTitle("Carpeta vacía");
 		String msg = "";
-		msg += "Lo siento, no se han encontrado";
-		msg += "\nimagenes en la carpeta:";
+		msg += "Lo siento, debe colocar al menos";
+		msg += "\n4 imagenes en la carpeta:";
 		msg += "\ncom.imagestrainer.imagenes";
 		dbNoImages.setMessage(msg);
 		dbNoImages.setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
@@ -252,7 +254,7 @@ public class EncodingActivity extends Activity
 		});
 		return dbNoImages.create();
 	}
-	
+
 	private AlertDialog crearDialogoSalirDelJuego()
 	{
 		Builder dbConfirmacionReinicio = new AlertDialog.Builder(this);
@@ -265,7 +267,7 @@ public class EncodingActivity extends Activity
 			{
 				dialog.dismiss();
 				saveState();
-				finish();				
+				finish();
 			}
 		});
 		dbConfirmacionReinicio.setNegativeButton("Salir sin guardar", new DialogInterface.OnClickListener()
@@ -308,7 +310,7 @@ public class EncodingActivity extends Activity
 	{
 		crearDialogoSalirDelJuego().show();
 	}
-	
+
 	@Override
 	public boolean onNavigateUp()
 	{
