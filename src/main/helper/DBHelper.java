@@ -3,7 +3,7 @@ package main.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.model.MemoImage;
+import main.model.Imagen;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -19,19 +19,17 @@ public class DBHelper extends SQLiteOpenHelper
 	// Database Name
 	private static final String DATABASE_NAME = "mydb";
 
-	// Images table name
-	private static final String TABLE_IMAGES = "images";
+	// Imagenes table name
+	private static final String TABLE_IMAGENES = "imagenes";
 
 	// Common Table Columns names
 	private static final String KEY_ID = "id";
 
-	// Images Table Columns names
-	private static final String KEY_PAR = "par";
-	private static final String KEY_NAME = "name";
-	private static final String KEY_SRC = "src";
-	private static final String KEY_STATE = "state";
+	// Imagenes Table Columns names
+	private static final String KEY_NOMBRE = "nombre";
+	private static final String KEY_ESTADO = "estado";
 
-	private static String CREATE_TABLE_IMAGES = "CREATE TABLE " + TABLE_IMAGES + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PAR + " TEXT," + KEY_NAME + " TEXT," + KEY_SRC + " TEXT" + KEY_STATE + " TEXT" + ")";
+	private static String CREATE_TABLE_IMAGENES = "CREATE TABLE " + TABLE_IMAGENES + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NOMBRE + " TEXT," + KEY_ESTADO + " TEXT" + ")";
 
 	public DBHelper(Context context)
 	{
@@ -42,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper
 	@Override
 	public void onCreate(SQLiteDatabase db)
 	{
-		db.execSQL(CREATE_TABLE_IMAGES);
+		db.execSQL(CREATE_TABLE_IMAGENES);
 	}
 
 	// Upgrading database
@@ -50,134 +48,94 @@ public class DBHelper extends SQLiteOpenHelper
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
 		// Drop older table if existed
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGES);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGENES);
 
 		// Create tables again
 		onCreate(db);
 	}
 
 	/**
-	 * All CRUD(Create, Read, Update, Delete) Operations for IMAGES
+	 * All CRUD(Create, Read, Update, Delete) Operations for TRABAJOS
 	 */
 
-	public void addImagen(MemoImage imagen)
+	public void addImagen(Imagen imagen)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(KEY_PAR, imagen.get_par());
-		values.put(KEY_NAME, imagen.get_name());
-		values.put(KEY_SRC, imagen.get_src());
-		values.put(KEY_STATE, imagen.get_state());
-		db.insert(TABLE_IMAGES, null, values);
+		values.put(KEY_NOMBRE, imagen.get_nombre());
+		values.put(KEY_ESTADO, imagen.get_estado());
+		db.insert(TABLE_IMAGENES, null, values);
 		db.close();
+
 	}
 
-	public MemoImage getImageById(String id)
+	public Imagen getImagenById(String id)
 	{
 		SQLiteDatabase db = this.getReadableDatabase();
-		MemoImage imagen = null;
+		Imagen imagen = new Imagen();
 
-		Cursor cursor = db.query(TABLE_IMAGES, new String[] { KEY_ID, KEY_PAR, KEY_NAME, KEY_SRC, KEY_STATE }, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+		Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_ESTADO }, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
 		if (cursor.moveToFirst())
 		{
-			imagen = new MemoImage();
 			imagen.set_id(Integer.parseInt(cursor.getString(0)));
-			imagen.set_par(cursor.getString(1));
-			imagen.set_name(cursor.getString(2));
-			imagen.set_src(cursor.getString(3));
-			imagen.set_state(cursor.getString(4));
+			imagen.set_nombre(cursor.getString(1));
+			imagen.set_estado(cursor.getString(2));
 			db.close();
 		}
+		else
+			imagen = null;
+
 		return imagen;
+
 	}
 
-	public MemoImage getImageByPar(String par)
+	public List<Imagen> findImagenesByEstado(String estado)
 	{
 		SQLiteDatabase db = this.getReadableDatabase();
-		MemoImage imagen = null;
+		List<Imagen> imagens = new ArrayList<Imagen>();
 
-		Cursor cursor = db.query(TABLE_IMAGES, new String[] { KEY_ID, KEY_PAR, KEY_NAME, KEY_SRC, KEY_STATE }, KEY_PAR + "=?", new String[] { String.valueOf(par) }, null, null, null, null);
-		if (cursor.moveToFirst())
-		{
-			imagen = new MemoImage();
-			imagen.set_id(Integer.parseInt(cursor.getString(0)));
-			imagen.set_par(cursor.getString(1));
-			imagen.set_name(cursor.getString(2));
-			imagen.set_src(cursor.getString(3));
-			imagen.set_state(cursor.getString(4));
-			db.close();
-		}
-		return imagen;
-	}
-
-	public int updateImagen(MemoImage imagen)
-	{
-		SQLiteDatabase db = this.getWritableDatabase();
-
-		ContentValues values = new ContentValues();
-		values.put(KEY_PAR, imagen.get_par());
-		values.put(KEY_NAME, imagen.get_name());
-		values.put(KEY_SRC, imagen.get_src());
-		values.put(KEY_STATE, imagen.get_state());
-
-		// updating row
-		return db.update(TABLE_IMAGES, values, KEY_ID + " = ?", new String[] { String.valueOf(imagen.get_id()) });
-	}
-
-	public void deleteImagen(MemoImage imagen)
-	{
-		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete(TABLE_IMAGES, KEY_ID + " = ?", new String[] { String.valueOf(imagen.get_id()) });
-		db.close();
-	}
-
-	public List<MemoImage> getAllImages()
-	{
-		List<MemoImage> images = new ArrayList<MemoImage>();
-		SQLiteDatabase db = this.getWritableDatabase();
-		String selectQuery = "SELECT  * FROM " + TABLE_IMAGES;
-		Cursor cursor = db.rawQuery(selectQuery, null);
+		Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_ESTADO }, KEY_ESTADO + "=?", new String[] { String.valueOf(estado) }, null, null, null, null);
 
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst())
 		{
 			do
 			{
-				MemoImage imagen = new MemoImage();
+				Imagen imagen = new Imagen();
 				imagen.set_id(Integer.parseInt(cursor.getString(0)));
-				imagen.set_par(cursor.getString(1));
-				imagen.set_name(cursor.getString(2));
-				imagen.set_src(cursor.getString(3));
-				imagen.set_state(cursor.getString(4));
-				images.add(imagen);
+				imagen.set_nombre(cursor.getString(1));
+				imagen.set_estado(cursor.getString(2));
+				imagens.add(imagen);
 			}
 			while (cursor.moveToNext());
 		}
-		return images;
+		db.close();
+
+		return imagens;
 	}
 
-	public MemoImage getImagesByState(String state)
+	public int updateImagen(Imagen imagen)
 	{
-		SQLiteDatabase db = this.getReadableDatabase();
-		MemoImage imagen = null;
+		SQLiteDatabase db = this.getWritableDatabase();
 
-		Cursor cursor = db.query(TABLE_IMAGES, new String[] { KEY_ID, KEY_PAR, KEY_NAME, KEY_SRC, KEY_STATE }, KEY_STATE + "=?", new String[] { String.valueOf(state) }, null, null, null, null);
-		if (cursor.moveToFirst())
-		{
-			imagen = new MemoImage();
-			imagen.set_id(Integer.parseInt(cursor.getString(0)));
-			imagen.set_par(cursor.getString(1));
-			imagen.set_name(cursor.getString(2));
-			imagen.set_state(cursor.getString(3));
-			db.close();
-		}
-		return imagen;
+		ContentValues values = new ContentValues();
+		values.put(KEY_ESTADO, imagen.get_estado());
+
+		return db.update(TABLE_IMAGENES, values, KEY_ID + " = ?", new String[] { String.valueOf(imagen.get_id()) });
+
 	}
 
-	public int getImagesCount()
+	public void deleteTabajo(Imagen imagen)
 	{
-		String countQuery = "SELECT * FROM " + TABLE_IMAGES;
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_IMAGENES, KEY_ID + " = ?", new String[] { String.valueOf(imagen.get_id()) });
+		db.close();
+	}
+
+	public int getImagenesCount()
+	{
+		String countQuery = "SELECT * FROM " + TABLE_IMAGENES;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(countQuery, null);
 		cursor.moveToFirst();
@@ -185,34 +143,10 @@ public class DBHelper extends SQLiteOpenHelper
 		return cursor.getCount();
 	}
 
-	public List<MemoImage> findImagesByState(String state)
-	{
-		List<MemoImage> images = new ArrayList<MemoImage>();
-		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.query(TABLE_IMAGES, new String[] { KEY_ID, KEY_PAR, KEY_NAME, KEY_SRC, KEY_STATE }, KEY_STATE + " = ?", new String[] { String.valueOf(state) }, null, null, null, null);
-
-		// looping through all rows and adding to list
-		if (cursor.moveToFirst())
-		{
-			do
-			{
-				MemoImage imagen = new MemoImage();
-				imagen.set_id(Integer.parseInt(cursor.getString(0)));
-				imagen.set_par(cursor.getString(1));
-				imagen.set_name(cursor.getString(2));
-				imagen.set_src(cursor.getString(3));
-				imagen.set_state(cursor.getString(4));
-				images.add(imagen);
-			}
-			while (cursor.moveToNext());
-		}
-		return images;
-	}
-
 	public void regenerateDB()
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGES);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGENES);
 		onCreate(db);
 		db.close();
 	}

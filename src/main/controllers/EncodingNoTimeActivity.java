@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import main.helper.DBHelper;
 import main.helper.IOHelper;
+import main.model.Imagen;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -34,6 +36,7 @@ public class EncodingNoTimeActivity extends Activity
 	private List<String> imagenesUsadas;
 	private String imagenCorrecta;
 	private IOHelper ioh;
+	private DBHelper dbh;
 	private int imagenesCorrectas;
 	private int imagenesIncorrectas;
 
@@ -44,6 +47,7 @@ public class EncodingNoTimeActivity extends Activity
 		setContentView(R.layout.activity_encoding_no_time);
 
 		ioh = new IOHelper(this);
+		dbh = new DBHelper(this);
 
 		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
 		tvCurrentCorrect = (TextView) findViewById(R.id.current_correct);
@@ -88,8 +92,16 @@ public class EncodingNoTimeActivity extends Activity
 	private void cargarImagenes()
 	{
 		List<String> imagesInGameFolder = ioh.getListImagesInGameFolder();
-		imagenes.addAll(imagesInGameFolder);
 		imagenesExtras.addAll(imagesInGameFolder);
+		
+		if (dbh.getImagenesCount() == 0)
+		{
+			imagenes.addAll(imagesInGameFolder);
+		}
+		else
+		{
+			loadState();
+		}
 	}
 
 	private void prepararImagenesParaMostrar()
@@ -176,7 +188,7 @@ public class EncodingNoTimeActivity extends Activity
 			imagenesIncorrectas++;
 		}
 		actualizarContadores();
-		
+
 		imagenesParaMostrar.remove(imagenCorrecta);
 		imagenesExtras.addAll(imagenesParaMostrar);
 		imagenesParaMostrar = new ArrayList<String>();
@@ -237,5 +249,34 @@ public class EncodingNoTimeActivity extends Activity
 			}
 		});
 		return dbNoImages.create();
+	}
+
+	private void saveState()
+	{
+		for (String i : imagenes)
+		{
+			Imagen imagen = new Imagen();
+			imagen.set_nombre(i);
+			imagen.set_estado("pendiente");
+			dbh.addImagen(imagen);
+		}
+	}
+
+	private void loadState()
+	{
+		List<Imagen> images = dbh.findImagenesByEstado("pendiente");
+		imagenes = new ArrayList<String>();
+		for (Imagen m : images)
+		{
+			imagenes.add(m.get_nombre());
+		}
+		dbh.regenerateDB();
+	}
+
+	@Override
+	public void onBackPressed()
+	{
+		saveState();
+		this.finish();
 	}
 }
