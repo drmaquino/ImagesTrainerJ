@@ -257,16 +257,15 @@ public class EncodingNoTimeActivity extends Activity
 	{
 		Builder dbConfirmacionReinicio = new AlertDialog.Builder(this);
 		dbConfirmacionReinicio.setTitle("Salir");
-		dbConfirmacionReinicio.setMessage("Guardar estado del repaso?");
+		dbConfirmacionReinicio.setMessage("Guardar estado del repaso?\n(esto puede demorar unos segundos)");
 		dbConfirmacionReinicio.setIcon(R.drawable.ic_launcher);
 		dbConfirmacionReinicio.setPositiveButton("Guardar", new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface dialog, int whichButton)
 			{
-				saveState();
 				dialog.dismiss();
-				finish();
-				startActivity(getIntent());
+				saveState();
+				finish();				
 			}
 		});
 		dbConfirmacionReinicio.setNegativeButton("Salir sin guardar", new DialogInterface.OnClickListener()
@@ -282,7 +281,7 @@ public class EncodingNoTimeActivity extends Activity
 
 	private void saveState()
 	{
-		Toast.makeText(this, "Guardando...", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "Aguarde un momento...", Toast.LENGTH_LONG).show();
 		for (String i : imagenes)
 		{
 			Imagen imagen = new Imagen();
