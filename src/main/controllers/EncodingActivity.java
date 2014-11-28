@@ -5,8 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import main.helper.DBHelper;
 import main.helper.IOHelper;
-import main.helper.Timer;
+import main.model.Imagen;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -16,12 +17,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EncodingActivity extends Activity
 {
 	private TextView tvCurrentPair;
 	private TextView tvCurrentCorrect;
-	
+	private TextView tvCurrentIncorrect;
+
 	private List<ImageButton> imageButtons;
 	private ImageButton btn1;
 	private ImageButton btn2;
@@ -32,9 +35,11 @@ public class EncodingActivity extends Activity
 	private List<String> imagenesExtras;
 	private List<String> imagenesParaMostrar;
 	private List<String> imagenesUsadas;
-	
 	private String imagenCorrecta;
 	private IOHelper ioh;
+	private DBHelper dbh;
+	private int imagenesCorrectas;
+	private int imagenesIncorrectas;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -43,9 +48,11 @@ public class EncodingActivity extends Activity
 		setContentView(R.layout.activity_encoding);
 
 		ioh = new IOHelper(this);
+		dbh = new DBHelper(this);
 
 		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
 		tvCurrentCorrect = (TextView) findViewById(R.id.current_correct);
+		tvCurrentIncorrect = (TextView) findViewById(R.id.current_incorrect);
 
 		imagenes = new ArrayList<String>();
 		imagenesExtras = new ArrayList<String>();
@@ -62,26 +69,40 @@ public class EncodingActivity extends Activity
 		imageButtons.add(btn2);
 		imageButtons.add(btn3);
 		imageButtons.add(btn4);
-		
+
 		cargarImagenes();
 		prepararImagenesParaMostrar();
 		mostrarImagenesPorPantalla();
-		mostrarElParQueDeseoEvaluar();		
-		actualizarMarcadorDeCorrectas();
-
-		Timer.start();
+		mostrarElParQueDeseoEvaluar();
+		inicializarContadores();
+		actualizarContadores();
 	}
 
-    private void actualizarMarcadorDeCorrectas()
-    {
-        tvCurrentCorrect.setText(String.format("%s", imagenesUsadas.size()));
-    }
+	private void inicializarContadores()
+	{
+		imagenesCorrectas = 0;
+		imagenesIncorrectas = 0;
+	}
+
+	private void actualizarContadores()
+	{
+		tvCurrentCorrect.setText(String.format("Correctas: %s", imagenesCorrectas));
+		tvCurrentIncorrect.setText(String.format("Incorrectas: %s", imagenesIncorrectas));
+	}
 
 	private void cargarImagenes()
 	{
 		List<String> imagesInGameFolder = ioh.getListImagesInGameFolder();
-		imagenes.addAll(imagesInGameFolder);
 		imagenesExtras.addAll(imagesInGameFolder);
+		
+		if (dbh.getImagenesCount() == 0)
+		{
+			imagenes.addAll(imagesInGameFolder);
+		}
+		else
+		{
+			loadState();
+		}
 	}
 
 	private void prepararImagenesParaMostrar()
@@ -160,39 +181,37 @@ public class EncodingActivity extends Activity
 		if (imagenCorrecta.equals(userSelectedPair))
 		{
 			imagenesUsadas.add(imagenCorrecta);
-			actualizarMarcadorDeCorrectas();
-			
-			imagenesParaMostrar.remove(imagenCorrecta);
-	        imagenesExtras.addAll(imagenesParaMostrar);
-	        imagenesParaMostrar = new ArrayList<String>();
-
-	        if (!imagenes.isEmpty())
-	        {
-	            prepararImagenesParaMostrar();
-	            mostrarImagenesPorPantalla();
-	            mostrarElParQueDeseoEvaluar();
-	        }
-	        else
-	        {
-	            crearDialogofinDelJuego().show();
-	        }
+			imagenesCorrectas++;
 		}
 		else
 		{
 			imagenes.add(imagenCorrecta);
-			crearDialogoError().show();
+			imagenesIncorrectas++;
+		}
+		actualizarContadores();
+
+		imagenesParaMostrar.remove(imagenCorrecta);
+		imagenesExtras.addAll(imagenesParaMostrar);
+		imagenesParaMostrar = new ArrayList<String>();
+
+		if (!imagenes.isEmpty())
+		{
+			prepararImagenesParaMostrar();
+			mostrarImagenesPorPantalla();
+			mostrarElParQueDeseoEvaluar();
+		}
+		else
+		{
+			crearDialogofinDelJuego().show();
+			dbh.regenerateDB();
 		}
 	}
 
 	private AlertDialog crearDialogofinDelJuego()
 	{
-		Timer.stop();
-		double elapsedTime = Timer.getTime();
-		Timer.reset();
-
 		Builder dbConfirmacionReinicio = new AlertDialog.Builder(this);
-		dbConfirmacionReinicio.setTitle("Felicitaciones!");
-		dbConfirmacionReinicio.setMessage(String.format("Has acertado todas las imagenes en %.2f segundos!", elapsedTime));
+		dbConfirmacionReinicio.setTitle("Fin del juego");
+		dbConfirmacionReinicio.setMessage("Has llegado al final de la lista!");
 		dbConfirmacionReinicio.setIcon(R.drawable.ic_launcher);
 		dbConfirmacionReinicio.setPositiveButton("Volver a empezar", new DialogInterface.OnClickListener()
 		{
@@ -214,46 +233,8 @@ public class EncodingActivity extends Activity
 		return dbConfirmacionReinicio.create();
 	}
 
-	private AlertDialog crearDialogoError()
-	{
-		Timer.stop();
-		double elapsedTime = Timer.getTime();
-		Timer.reset();
-
-		Builder dbError = new AlertDialog.Builder(this);
-		dbError.setTitle("Imagen incorrecta");
-		String msg = "";
-		msg += "Lo siento, has cometido un error.";
-		msg += "\nTiempo total: %.2f.";
-		msg += "\nResultado: %s correctas.";
-		msg += "\n(Total de imagenes: %s)";
-		dbError.setMessage(String.format(msg, elapsedTime, imagenesUsadas.size(), imagenesExtras.size() + 4));
-		dbError.setPositiveButton("Volver a empezar", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int whichButton)
-			{
-				dialog.dismiss();
-				finish();
-				startActivity(getIntent());
-			}
-		});
-		dbError.setNegativeButton("Salir", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int which)
-			{
-				dialog.dismiss();
-				finish();
-			}
-		});
-		return dbError.create();
-	}
-	
 	private AlertDialog crearDialogoNoHayImagenes()
 	{
-		Timer.stop();
-		double elapsedTime = Timer.getTime();
-		Timer.reset();
-
 		Builder dbNoImages = new AlertDialog.Builder(this);
 		dbNoImages.setTitle("Carpeta vacía");
 		String msg = "";
@@ -270,5 +251,68 @@ public class EncodingActivity extends Activity
 			}
 		});
 		return dbNoImages.create();
+	}
+	
+	private AlertDialog crearDialogoSalirDelJuego()
+	{
+		Builder dbConfirmacionReinicio = new AlertDialog.Builder(this);
+		dbConfirmacionReinicio.setTitle("Salir");
+		dbConfirmacionReinicio.setMessage("Guardar estado del repaso?\n(esto puede demorar unos segundos)");
+		dbConfirmacionReinicio.setIcon(R.drawable.ic_launcher);
+		dbConfirmacionReinicio.setPositiveButton("Guardar", new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int whichButton)
+			{
+				dialog.dismiss();
+				saveState();
+				finish();				
+			}
+		});
+		dbConfirmacionReinicio.setNegativeButton("Salir sin guardar", new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				dialog.dismiss();
+				finish();
+			}
+		});
+		return dbConfirmacionReinicio.create();
+	}
+
+	private void saveState()
+	{
+		Toast.makeText(this, "Aguarde un momento...", Toast.LENGTH_LONG).show();
+		for (String i : imagenes)
+		{
+			Imagen imagen = new Imagen();
+			imagen.set_nombre(i);
+			imagen.set_estado("pendiente");
+			dbh.addImagen(imagen);
+		}
+		Toast.makeText(this, "...guardado!", Toast.LENGTH_SHORT).show();
+	}
+
+	private void loadState()
+	{
+		List<Imagen> images = dbh.findImagenesByEstado("pendiente");
+		imagenes = new ArrayList<String>();
+		for (Imagen m : images)
+		{
+			imagenes.add(m.get_nombre());
+		}
+		dbh.regenerateDB();
+	}
+
+	@Override
+	public void onBackPressed()
+	{
+		crearDialogoSalirDelJuego().show();
+	}
+	
+	@Override
+	public boolean onNavigateUp()
+	{
+		crearDialogoSalirDelJuego().show();
+		return false;
 	}
 }
