@@ -202,6 +202,7 @@ public class EncodingNoTimeActivity extends Activity
 		else
 		{
 			crearDialogofinDelJuego().show();
+			dbh.regenerateDB();
 		}
 	}
 
