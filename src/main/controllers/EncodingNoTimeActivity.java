@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EncodingNoTimeActivity extends Activity
 {
@@ -251,9 +252,37 @@ public class EncodingNoTimeActivity extends Activity
 		});
 		return dbNoImages.create();
 	}
+	
+	private AlertDialog crearDialogoSalirDelJuego()
+	{
+		Builder dbConfirmacionReinicio = new AlertDialog.Builder(this);
+		dbConfirmacionReinicio.setTitle("Salir");
+		dbConfirmacionReinicio.setMessage("Guardar estado del repaso?");
+		dbConfirmacionReinicio.setIcon(R.drawable.ic_launcher);
+		dbConfirmacionReinicio.setPositiveButton("Guardar", new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int whichButton)
+			{
+				saveState();
+				dialog.dismiss();
+				finish();
+				startActivity(getIntent());
+			}
+		});
+		dbConfirmacionReinicio.setNegativeButton("Salir sin guardar", new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				dialog.dismiss();
+				finish();
+			}
+		});
+		return dbConfirmacionReinicio.create();
+	}
 
 	private void saveState()
 	{
+		Toast.makeText(this, "Guardando...", Toast.LENGTH_LONG).show();
 		for (String i : imagenes)
 		{
 			Imagen imagen = new Imagen();
@@ -261,6 +290,7 @@ public class EncodingNoTimeActivity extends Activity
 			imagen.set_estado("pendiente");
 			dbh.addImagen(imagen);
 		}
+		Toast.makeText(this, "...guardado!", Toast.LENGTH_SHORT).show();
 	}
 
 	private void loadState()
@@ -277,7 +307,13 @@ public class EncodingNoTimeActivity extends Activity
 	@Override
 	public void onBackPressed()
 	{
-		saveState();
-		this.finish();
+		crearDialogoSalirDelJuego().show();
+	}
+	
+	@Override
+	public boolean onNavigateUp()
+	{
+		crearDialogoSalirDelJuego().show();
+		return false;
 	}
 }
