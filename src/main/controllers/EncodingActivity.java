@@ -20,6 +20,8 @@ import android.widget.TextView;
 public class EncodingActivity extends Activity
 {
 	private TextView tvCurrentPair;
+	private TextView tvCurrentCorrect;
+	
 	private List<ImageButton> imageButtons;
 	private ImageButton btn1;
 	private ImageButton btn2;
@@ -30,6 +32,7 @@ public class EncodingActivity extends Activity
 	private List<String> imagenesExtras;
 	private List<String> imagenesParaMostrar;
 	private List<String> imagenesUsadas;
+	
 	private String imagenCorrecta;
 	private IOHelper ioh;
 
@@ -42,6 +45,7 @@ public class EncodingActivity extends Activity
 		ioh = new IOHelper(this);
 
 		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
+		tvCurrentCorrect = (TextView) findViewById(R.id.current_correct);
 
 		imagenes = new ArrayList<String>();
 		imagenesExtras = new ArrayList<String>();
@@ -58,14 +62,20 @@ public class EncodingActivity extends Activity
 		imageButtons.add(btn2);
 		imageButtons.add(btn3);
 		imageButtons.add(btn4);
-
+		
 		cargarImagenes();
 		prepararImagenesParaMostrar();
 		mostrarImagenesPorPantalla();
-		mostrarElParQueDeseoEvaluar();
+		mostrarElParQueDeseoEvaluar();		
+		actualizarMarcadorDeCorrectas();
 
 		Timer.start();
 	}
+
+    private void actualizarMarcadorDeCorrectas()
+    {
+        tvCurrentCorrect.setText(String.format("%s", imagenesUsadas.size()));
+    }
 
 	private void cargarImagenes()
 	{
@@ -150,27 +160,27 @@ public class EncodingActivity extends Activity
 		if (imagenCorrecta.equals(userSelectedPair))
 		{
 			imagenesUsadas.add(imagenCorrecta);
+			actualizarMarcadorDeCorrectas();
+			
+			imagenesParaMostrar.remove(imagenCorrecta);
+	        imagenesExtras.addAll(imagenesParaMostrar);
+	        imagenesParaMostrar = new ArrayList<String>();
+
+	        if (!imagenes.isEmpty())
+	        {
+	            prepararImagenesParaMostrar();
+	            mostrarImagenesPorPantalla();
+	            mostrarElParQueDeseoEvaluar();
+	        }
+	        else
+	        {
+	            crearDialogofinDelJuego().show();
+	        }
 		}
 		else
 		{
 			imagenes.add(imagenCorrecta);
 			crearDialogoError().show();
-			return;
-		}
-
-		imagenesParaMostrar.remove(imagenCorrecta);
-		imagenesExtras.addAll(imagenesParaMostrar);
-		imagenesParaMostrar = new ArrayList<String>();
-
-		if (!imagenes.isEmpty())
-		{
-			prepararImagenesParaMostrar();
-			mostrarImagenesPorPantalla();
-			mostrarElParQueDeseoEvaluar();
-		}
-		else
-		{
-			crearDialogofinDelJuego().show();
 		}
 	}
 
