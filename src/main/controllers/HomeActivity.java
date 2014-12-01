@@ -44,7 +44,7 @@ public class HomeActivity extends Activity
 		Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
 	}
 	
-	public void synchronizeDB()
+	public void synchronizeDB(View v)
 	{
 		IOHelper ioh = new IOHelper(this);
 		DBHelper dbh = new DBHelper(this);
@@ -56,6 +56,8 @@ public class HomeActivity extends Activity
 			imagen.set_nombre(filename);
 			imagen.set_estado("pendiente");
 			dbh.addImagen(imagen);
-		}	
+		}
+		int ic = dbh.getImagenesCount();
+		Toast.makeText(this, ic + " imagenes sincronizadas", Toast.LENGTH_SHORT).show();
 	}
 }
