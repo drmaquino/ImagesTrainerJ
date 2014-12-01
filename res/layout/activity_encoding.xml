@@ -32,7 +32,16 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/current_correct"
+                android:id="@+id/current_resueltas"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+            
+            <TextView
+                android:id="@+id/current_pendientes"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -41,7 +50,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/current_incorrect"
+                android:id="@+id/current_incorrectas"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"

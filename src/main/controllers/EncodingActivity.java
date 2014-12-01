@@ -17,13 +17,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class EncodingActivity extends Activity
 {
 	private TextView tvCurrentPair;
-	private TextView tvCurrentCorrect;
-	private TextView tvCurrentIncorrect;
+	private TextView tvCurrentResueltas;
+	private TextView tvCurrentPendientes;
+	private TextView tvCurrentIncorrectas;
 
 	private List<ImageButton> imageButtons;
 	private ImageButton btn1;
@@ -50,8 +50,9 @@ public class EncodingActivity extends Activity
 		dbh = new DBHelper(this);
 
 		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
-		tvCurrentCorrect = (TextView) findViewById(R.id.current_correct);
-		tvCurrentIncorrect = (TextView) findViewById(R.id.current_incorrect);
+		tvCurrentResueltas = (TextView) findViewById(R.id.current_resueltas);
+		tvCurrentPendientes = (TextView) findViewById(R.id.current_pendientes);
+		tvCurrentIncorrectas = (TextView) findViewById(R.id.current_incorrectas);
 
 		imagenesPendientes = new ArrayList<Imagen>();
 		imagenesResueltas = new ArrayList<Imagen>();
@@ -73,7 +74,7 @@ public class EncodingActivity extends Activity
 		prepararImagenesParaMostrar();
 		mostrarImagenesPorPantalla();
 		mostrarElParQueDeseoEvaluar();
-		inicializarContadores();
+		inicializarContadorIncorrectas();
 		actualizarContadores();
 	}
 
@@ -147,15 +148,16 @@ public class EncodingActivity extends Activity
 		}
 	}
 
-	private void inicializarContadores()
+	private void inicializarContadorIncorrectas()
 	{
 		imagenesIncorrectas = 0;
 	}
 
 	private void actualizarContadores()
 	{
-		tvCurrentCorrect.setText(String.format("Correctas: %s", imagenesResueltas.size()));
-		tvCurrentIncorrect.setText(String.format("Incorrectas: %s", imagenesIncorrectas));
+		tvCurrentResueltas.setText(String.format("Resueltas: %s", imagenesResueltas.size()));
+		tvCurrentPendientes.setText(String.format("Pendientes: %s", imagenesPendientes.size()));
+		tvCurrentIncorrectas.setText(String.format("Incorrectas: %s", imagenesIncorrectas));
 	}
 
 	public void buttonClick(View v)

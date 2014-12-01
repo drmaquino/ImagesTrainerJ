@@ -26,17 +26,10 @@ public class HomeActivity extends Activity
 
 	public void launchEncodingActivity(View view)
 	{
-//		 Intent intent = new Intent(this, EncodingActivity.class);
-//		 startActivity(intent);
-		 Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
-	}
-	
-	public void launchEncodingNoTimeActivity(View view)
-	{
-		 Intent intent = new Intent(this, EncodingNoTimeActivity.class);
+		 Intent intent = new Intent(this, EncodingActivity.class);
 		 startActivity(intent);
 	}
-
+	
 	public void launchDecodingActivity(View view)
 	{
 		// Intent intent = new Intent(this, DecodingActivity.class);
@@ -57,7 +50,7 @@ public class HomeActivity extends Activity
 			imagen.set_estado("pendiente");
 			dbh.addImagen(imagen);
 		}
-		int ic = dbh.getImagenesCount();
+		int ic = dbh.countImagenes();
 		Toast.makeText(this, ic + " imagenes sincronizadas", Toast.LENGTH_SHORT).show();
 	}
 }
