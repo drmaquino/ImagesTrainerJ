@@ -89,6 +89,31 @@ public class DBHelper extends SQLiteOpenHelper
 		return imagen;
 
 	}
+	
+	public List<Imagen> findAllImagenes()
+	{
+		SQLiteDatabase db = this.getReadableDatabase();
+		List<Imagen> imagenes = new ArrayList<Imagen>();
+
+		Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_ESTADO }, null, null, null, null, null, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst())
+		{
+			do
+			{
+				Imagen imagen = new Imagen();
+				imagen.set_id(Integer.parseInt(cursor.getString(0)));
+				imagen.set_nombre(cursor.getString(1));
+				imagen.set_estado(cursor.getString(2));
+				imagenes.add(imagen);
+			}
+			while (cursor.moveToNext());
+		}
+		db.close();
+
+		return imagenes;
+	}
 
 	public List<Imagen> findImagenesByEstado(String estado)
 	{
@@ -133,11 +158,10 @@ public class DBHelper extends SQLiteOpenHelper
 		db.close();
 	}
 
-	public int getImagenesCount()
+	public int countImagenes()
 	{
-		String countQuery = "SELECT * FROM " + TABLE_IMAGENES;
 		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.rawQuery(countQuery, null);
+		Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_ESTADO }, null, null, null, null, null, null);
 		cursor.moveToFirst();
 		cursor.close();
 		return cursor.getCount();
