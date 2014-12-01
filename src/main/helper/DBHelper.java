@@ -142,6 +142,15 @@ public class DBHelper extends SQLiteOpenHelper
 		cursor.close();
 		return cursor.getCount();
 	}
+	
+	public int countImagenesByEstado(String estado)
+	{
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_ESTADO }, KEY_ESTADO + "=?", new String[] { String.valueOf(estado) }, null, null, null, null);
+		cursor.moveToFirst();
+		cursor.close();
+		return cursor.getCount();
+	}
 
 	public void regenerateDB()
 	{
