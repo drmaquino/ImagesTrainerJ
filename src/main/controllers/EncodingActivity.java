@@ -31,14 +31,13 @@ public class EncodingActivity extends Activity
 	private ImageButton btn3;
 	private ImageButton btn4;
 
-	private List<String> imagenes;
-	private List<String> imagenesExtras;
-	private List<String> imagenesParaMostrar;
-	private List<String> imagenesUsadas;
-	private String imagenCorrecta;
+	private List<Imagen> imagenesPendientes;
+	private List<Imagen> imagenesResueltas;
+	private List<Imagen> imagenesTotal;
+	private List<Imagen> imagenesParaMostrar;
+	private Imagen imagenCorrecta;
 	private IOHelper ioh;
 	private DBHelper dbh;
-	private int imagenesCorrectas;
 	private int imagenesIncorrectas;
 
 	@Override
@@ -54,11 +53,11 @@ public class EncodingActivity extends Activity
 		tvCurrentCorrect = (TextView) findViewById(R.id.current_correct);
 		tvCurrentIncorrect = (TextView) findViewById(R.id.current_incorrect);
 
-		imagenes = new ArrayList<String>();
-		imagenesExtras = new ArrayList<String>();
+		imagenesPendientes = new ArrayList<Imagen>();
+		imagenesResueltas = new ArrayList<Imagen>();
+		imagenesTotal = new ArrayList<Imagen>();
+		imagenesParaMostrar = new ArrayList<Imagen>();
 		imageButtons = new ArrayList<ImageButton>();
-		imagenesParaMostrar = new ArrayList<String>();
-		imagenesUsadas = new ArrayList<String>();
 
 		btn1 = (ImageButton) findViewById(R.id.btn1);
 		btn2 = (ImageButton) findViewById(R.id.btn2);
@@ -78,36 +77,17 @@ public class EncodingActivity extends Activity
 		actualizarContadores();
 	}
 
-	private void inicializarContadores()
-	{
-		imagenesCorrectas = 0;
-		imagenesIncorrectas = 0;
-	}
-
-	private void actualizarContadores()
-	{
-		tvCurrentCorrect.setText(String.format("Correctas: %s", imagenesCorrectas));
-		tvCurrentIncorrect.setText(String.format("Incorrectas: %s", imagenesIncorrectas));
-	}
-
 	private void cargarImagenes()
 	{
-		List<String> imagesInGameFolder = ioh.getListImagesInGameFolder();
-		imagenesExtras.addAll(imagesInGameFolder);
-		if (imagenesExtras.size() < 4)
+		imagenesPendientes = dbh.findImagenesByEstado("pendiente");
+		imagenesResueltas = dbh.findImagenesByEstado("resuelta");
+
+		imagenesTotal.addAll(imagenesPendientes);
+		imagenesTotal.addAll(imagenesResueltas);
+
+		if (imagenesTotal.size() < 4)
 		{
 			crearDialogoNoHayImagenes().show();
-		}
-		else
-		{
-			if (dbh.getImagenesCount() == 0)
-			{
-				imagenes.addAll(imagesInGameFolder);
-			}
-			else
-			{
-				loadState();
-			}
 		}
 	}
 
@@ -115,25 +95,25 @@ public class EncodingActivity extends Activity
 	{
 		int index;
 		Random random;
-		List<String> tresImagenes;
+		List<Imagen> tresImagenes;
 
-		if (!imagenes.isEmpty())
+		if (!imagenesPendientes.isEmpty())
 		{
 			random = new Random();
-			index = random.nextInt(imagenes.size());
-			imagenCorrecta = imagenes.remove(index);
+			index = random.nextInt(imagenesPendientes.size());
+			imagenCorrecta = imagenesPendientes.remove(index);
 			imagenesParaMostrar.add(imagenCorrecta);
 
-			tresImagenes = new ArrayList<String>();
+			tresImagenes = new ArrayList<Imagen>();
 
 			while (tresImagenes.size() < 3)
 			{
-				index = random.nextInt(imagenesExtras.size());
-				String image = imagenesExtras.get(index);
-				if (image != imagenCorrecta)
+				index = random.nextInt(imagenesTotal.size());
+				Imagen imagen = imagenesTotal.get(index);
+				if (imagen.get_nombre() != imagenCorrecta.get_nombre())
 				{
-					image = imagenesExtras.remove(index);
-					tresImagenes.add(image);
+					imagen = imagenesTotal.remove(index);
+					tresImagenes.add(imagen);
 				}
 			}
 			imagenesParaMostrar.addAll(tresImagenes);
@@ -147,14 +127,14 @@ public class EncodingActivity extends Activity
 		for (int i = 0; i < imagenesParaMostrar.size(); i++)
 		{
 			ImageButton imageButton = imageButtons.get(i);
-			String image = imagenesParaMostrar.get(i);
+			Imagen imagen = imagenesParaMostrar.get(i);
 
-			Bitmap imgBitmap = ioh.getBitmapFromImagesFolder(image);
+			Bitmap imgBitmap = ioh.getBitmapFromImagesFolder(imagen.get_nombre());
 
 			if (imgBitmap != null)
 			{
 				imageButton.setImageBitmap(imgBitmap);
-				imageButton.setContentDescription(image);
+				imageButton.setContentDescription(imagen.get_nombre());
 			}
 		}
 	}
@@ -163,40 +143,48 @@ public class EncodingActivity extends Activity
 	{
 		if (imagenCorrecta != null)
 		{
-			tvCurrentPair.setText(imagenCorrecta.split("\\.")[0].toUpperCase());
+			tvCurrentPair.setText(imagenCorrecta.get_nombre().split("\\.")[0].toUpperCase());
 		}
+	}
+
+	private void inicializarContadores()
+	{
+		imagenesIncorrectas = 0;
+	}
+
+	private void actualizarContadores()
+	{
+		tvCurrentCorrect.setText(String.format("Correctas: %s", imagenesResueltas.size()));
+		tvCurrentIncorrect.setText(String.format("Incorrectas: %s", imagenesIncorrectas));
 	}
 
 	public void buttonClick(View v)
 	{
 		ImageButton button = (ImageButton) v;
 		String userSelectedPair = (String) button.getContentDescription();
-		if (userSelectedPair.equals("error"))
-		{
-			return;
-		}
 		chequearRespuesta(userSelectedPair);
 	}
 
 	private void chequearRespuesta(String userSelectedPair)
 	{
-		if (imagenCorrecta.equals(userSelectedPair))
+		if (imagenCorrecta.get_nombre().equals(userSelectedPair))
 		{
-			imagenesUsadas.add(imagenCorrecta);
-			imagenesCorrectas++;
+			imagenCorrecta.set_estado("resuelta");
+			dbh.updateImagen(imagenCorrecta);
+			imagenesResueltas.add(imagenCorrecta);
 		}
 		else
 		{
-			imagenes.add(imagenCorrecta);
+			imagenesPendientes.add(imagenCorrecta);
 			imagenesIncorrectas++;
 		}
 		actualizarContadores();
 
 		imagenesParaMostrar.remove(imagenCorrecta);
-		imagenesExtras.addAll(imagenesParaMostrar);
-		imagenesParaMostrar = new ArrayList<String>();
+		imagenesTotal.addAll(imagenesParaMostrar);
+		imagenesParaMostrar = new ArrayList<Imagen>();
 
-		if (!imagenes.isEmpty())
+		if (!imagenesPendientes.isEmpty())
 		{
 			prepararImagenesParaMostrar();
 			mostrarImagenesPorPantalla();
@@ -253,68 +241,5 @@ public class EncodingActivity extends Activity
 			}
 		});
 		return dbNoImages.create();
-	}
-
-	private AlertDialog crearDialogoSalirDelJuego()
-	{
-		Builder dbConfirmacionReinicio = new AlertDialog.Builder(this);
-		dbConfirmacionReinicio.setTitle("Salir");
-		dbConfirmacionReinicio.setMessage("Guardar estado del repaso?\n(esto puede demorar unos segundos)");
-		dbConfirmacionReinicio.setIcon(R.drawable.ic_launcher);
-		dbConfirmacionReinicio.setPositiveButton("Guardar", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int whichButton)
-			{
-				dialog.dismiss();
-				saveState();
-				finish();
-			}
-		});
-		dbConfirmacionReinicio.setNegativeButton("Salir sin guardar", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int which)
-			{
-				dialog.dismiss();
-				finish();
-			}
-		});
-		return dbConfirmacionReinicio.create();
-	}
-
-	private void saveState()
-	{
-		Toast.makeText(this, "Aguarde un momento...", Toast.LENGTH_LONG).show();
-		for (String i : imagenes)
-		{
-			Imagen imagen = new Imagen();
-			imagen.set_nombre(i);
-			imagen.set_estado("pendiente");
-			dbh.addImagen(imagen);
-		}
-		Toast.makeText(this, "...guardado!", Toast.LENGTH_SHORT).show();
-	}
-
-	private void loadState()
-	{
-		List<Imagen> images = dbh.findImagenesByEstado("pendiente");
-		imagenes = new ArrayList<String>();
-		for (Imagen m : images)
-		{
-			imagenes.add(m.get_nombre());
-		}
-		dbh.regenerateDB();
-	}
-
-	@Override
-	public void onBackPressed()
-	{
-		crearDialogoSalirDelJuego().show();
-	}
-
-	@Override
-	public boolean onNavigateUp()
-	{
-		crearDialogoSalirDelJuego().show();
-		return false;
 	}
 }
