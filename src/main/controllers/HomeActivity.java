@@ -1,6 +1,10 @@
 package main.controllers;
 
+import java.util.List;
+
+import main.helper.DBHelper;
 import main.helper.IOHelper;
+import main.model.Imagen;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,5 +46,16 @@ public class HomeActivity extends Activity
 	
 	public void synchronizeDB()
 	{
+		IOHelper ioh = new IOHelper(this);
+		DBHelper dbh = new DBHelper(this);
+		dbh.regenerateDB();
+		List<String> imagesInGameFolder = ioh.getListImagesInGameFolder();
+		for (String filename : imagesInGameFolder)
+		{
+			Imagen imagen = new Imagen();
+			imagen.set_nombre(filename);
+			imagen.set_estado("pendiente");
+			dbh.addImagen(imagen);
+		}	
 	}
 }
