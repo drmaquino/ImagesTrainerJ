@@ -93,7 +93,7 @@ public class DBHelper extends SQLiteOpenHelper
 	public List<Imagen> findImagenesByEstado(String estado)
 	{
 		SQLiteDatabase db = this.getReadableDatabase();
-		List<Imagen> imagens = new ArrayList<Imagen>();
+		List<Imagen> imagenes = new ArrayList<Imagen>();
 
 		Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_ESTADO }, KEY_ESTADO + "=?", new String[] { String.valueOf(estado) }, null, null, null, null);
 
@@ -106,13 +106,13 @@ public class DBHelper extends SQLiteOpenHelper
 				imagen.set_id(Integer.parseInt(cursor.getString(0)));
 				imagen.set_nombre(cursor.getString(1));
 				imagen.set_estado(cursor.getString(2));
-				imagens.add(imagen);
+				imagenes.add(imagen);
 			}
 			while (cursor.moveToNext());
 		}
 		db.close();
 
-		return imagens;
+		return imagenes;
 	}
 
 	public int updateImagen(Imagen imagen)
