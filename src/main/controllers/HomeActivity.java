@@ -39,4 +39,8 @@ public class HomeActivity extends Activity
 		// startActivity(intent);
 		Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
 	}
+	
+	public void synchronizeDB()
+	{
+	}
 }

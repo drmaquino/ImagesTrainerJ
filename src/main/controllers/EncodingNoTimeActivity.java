@@ -288,7 +288,7 @@ public class EncodingNoTimeActivity extends Activity
 		{
 			Imagen imagen = new Imagen();
 			imagen.set_nombre(i);
-			imagen.set_estado("pendiente");
+			imagen.set_estado("unica");
 			dbh.addImagen(imagen);
 		}
 		Toast.makeText(this, "...guardado!", Toast.LENGTH_SHORT).show();
@@ -296,7 +296,7 @@ public class EncodingNoTimeActivity extends Activity
 
 	private void loadState()
 	{
-		List<Imagen> images = dbh.findImagenesByEstado("pendiente");
+		List<Imagen> images = dbh.findImagenesByEstado("unica");
 		imagenes = new ArrayList<String>();
 		for (Imagen m : images)
 		{
