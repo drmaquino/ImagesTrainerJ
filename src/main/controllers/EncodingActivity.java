@@ -17,13 +17,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EncodingActivity extends Activity
 {
 	private TextView tvCurrentPair;
 	private TextView tvCurrentResueltas;
 	private TextView tvCurrentPendientes;
-	private TextView tvCurrentIncorrectas;
 
 	private List<ImageButton> imageButtons;
 	private ImageButton btn1;
@@ -38,7 +38,6 @@ public class EncodingActivity extends Activity
 	private Imagen imagenCorrecta;
 	private IOHelper ioh;
 	private DBHelper dbh;
-	private int imagenesIncorrectas;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -52,7 +51,6 @@ public class EncodingActivity extends Activity
 		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
 		tvCurrentResueltas = (TextView) findViewById(R.id.current_resueltas);
 		tvCurrentPendientes = (TextView) findViewById(R.id.current_pendientes);
-		tvCurrentIncorrectas = (TextView) findViewById(R.id.current_incorrectas);
 
 		imagenesPendientes = new ArrayList<Imagen>();
 		imagenesResueltas = new ArrayList<Imagen>();
@@ -74,7 +72,6 @@ public class EncodingActivity extends Activity
 		prepararImagenesParaMostrar();
 		mostrarImagenesPorPantalla();
 		mostrarElParQueDeseoEvaluar();
-		inicializarContadorIncorrectas();
 		actualizarContadores();
 	}
 
@@ -148,16 +145,10 @@ public class EncodingActivity extends Activity
 		}
 	}
 
-	private void inicializarContadorIncorrectas()
-	{
-		imagenesIncorrectas = 0;
-	}
-
 	private void actualizarContadores()
 	{
 		tvCurrentResueltas.setText(String.format("Resueltas: %s", imagenesResueltas.size()));
 		tvCurrentPendientes.setText(String.format("Pendientes: %s", imagenesPendientes.size()));
-		tvCurrentIncorrectas.setText(String.format("Incorrectas: %s", imagenesIncorrectas));
 	}
 
 	public void buttonClick(View v)
@@ -177,8 +168,8 @@ public class EncodingActivity extends Activity
 		}
 		else
 		{
-			imagenesPendientes.add(imagenCorrecta);
-			imagenesIncorrectas++;
+			Toast.makeText(this, "Incorrecto...!", Toast.LENGTH_SHORT).show();
+			imagenesPendientes.add(imagenCorrecta);			
 		}
 		actualizarContadores();
 
