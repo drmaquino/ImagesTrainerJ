@@ -14,43 +14,53 @@ import android.widget.Toast;
 public class HomeActivity extends Activity
 {
 	private IOHelper ioh;
+	private DBHelper dbh;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		ioh = new IOHelper(getBaseContext());
+		ioh = new IOHelper(this);
+		dbh = new DBHelper(this);
 		ioh.createGameFolder();
+		synchronizeDB();
 	}
 
 	public void launchEncodingActivity(View view)
 	{
-		 Intent intent = new Intent(this, EncodingActivity.class);
-		 startActivity(intent);
+		Intent intent = new Intent(this, EncodingActivity.class);
+		startActivity(intent);
 	}
-	
+
 	public void launchDecodingActivity(View view)
 	{
 		// Intent intent = new Intent(this, DecodingActivity.class);
 		// startActivity(intent);
 		Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
 	}
-	
-	public void synchronizeDB(View v)
+
+	public void synchronizeDB()
 	{
-		IOHelper ioh = new IOHelper(this);
-		DBHelper dbh = new DBHelper(this);
-		dbh.regenerateDB();
 		List<String> imagesInGameFolder = ioh.getListImagesInGameFolder();
-		for (String filename : imagesInGameFolder)
+		List<Imagen> imagesInDB = dbh.findAllImagenes();
+
+		for (Imagen imagen : imagesInDB)
 		{
-			Imagen imagen = new Imagen();
-			imagen.set_nombre(filename);
-			imagen.set_estado("pendiente");
-			dbh.addImagen(imagen);
+			int existe = imagesInGameFolder.indexOf(imagen.get_nombre());
+			if (existe == -1)
+			{
+				dbh.deleteImagen(imagen);
+			}
+			imagesInGameFolder.remove(imagen.get_nombre());
 		}
-		int ic = dbh.countImagenes();
-		Toast.makeText(this, ic + " imagenes sincronizadas", Toast.LENGTH_SHORT).show();
+
+		for (String imagen : imagesInGameFolder)
+		{
+			Imagen i = new Imagen();
+			i.set_nombre(imagen);
+			i.set_estado("pendiente");
+			dbh.addImagen(i);
+		}
 	}
 }
