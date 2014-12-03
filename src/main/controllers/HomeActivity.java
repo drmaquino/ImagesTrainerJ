@@ -40,25 +40,31 @@ public class HomeActivity extends Activity
 
 	public void synchronizeDB()
 	{
-		List<String> imagesInGameFolder = ioh.getListImagesInGameFolder();
-		List<Imagen> imagesInDB = dbh.findAllImagenes();
-
-		for (Imagen imagen : imagesInDB)
+		List<String> foldersInGameFolder = ioh.getListFoldersInGameFolder();
+		
+		for (String carpeta : foldersInGameFolder)
 		{
-			int existe = imagesInGameFolder.indexOf(imagen.get_nombre());
-			if (existe == -1)
+			List<String> imagesInFolder = ioh.getListImagesInFolder(carpeta);
+			List<Imagen> imagesInDB = dbh.findImagenesByFolder(carpeta);
+			
+			for (Imagen imagen : imagesInDB)
 			{
-				dbh.deleteImagen(imagen);
+				int existe = imagesInFolder.indexOf(imagen.get_nombre());
+				if (existe == -1)
+				{
+					dbh.deleteImagen(imagen);
+				}
+				imagesInFolder.remove(imagen.get_nombre());
 			}
-			imagesInGameFolder.remove(imagen.get_nombre());
-		}
 
-		for (String imagen : imagesInGameFolder)
-		{
-			Imagen i = new Imagen();
-			i.set_nombre(imagen);
-			i.set_estado("pendiente");
-			dbh.addImagen(i);
+			for (String imagen : imagesInFolder)
+			{
+				Imagen i = new Imagen();
+				i.set_nombre(imagen);
+				i.set_carpeta(carpeta);
+				i.set_estado("pendiente");
+				dbh.addImagen(i);
+			}			
 		}
 	}
 }
