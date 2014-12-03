@@ -72,8 +72,8 @@ public class DecodingActivity extends Activity
 
 		cargarImagenes();
 		prepararImagenesParaMostrar();
-		mostrarImagenesPorPantalla();
-		mostrarElParQueDeseoEvaluar();
+		mostrarParesPorPantalla();
+		mostrarLaImagenQueDeseoEvaluar();
 		actualizarContadores();
 	}
 
@@ -120,7 +120,7 @@ public class DecodingActivity extends Activity
 		}
 	}
 
-	private void mostrarImagenesPorPantalla()
+	private void mostrarParesPorPantalla()
 	{
 		Collections.shuffle(imagenesParaMostrar);
 
@@ -133,7 +133,7 @@ public class DecodingActivity extends Activity
 		}
 	}
 
-	private void mostrarElParQueDeseoEvaluar()
+	private void mostrarLaImagenQueDeseoEvaluar()
 	{
 		if (imagenCorrecta != null)
 		{
@@ -181,8 +181,8 @@ public class DecodingActivity extends Activity
 		if (!imagenesPendientes.isEmpty())
 		{
 			prepararImagenesParaMostrar();
-			mostrarImagenesPorPantalla();
-			mostrarElParQueDeseoEvaluar();
+			mostrarParesPorPantalla();
+			mostrarLaImagenQueDeseoEvaluar();
 		}
 		else
 		{
