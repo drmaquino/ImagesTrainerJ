@@ -4,6 +4,7 @@ public class Imagen
 {
 	private int _id;
 	private String _nombre;
+	private String _carpeta;
 	private String _estado;
 
 	public int get_id()
@@ -26,6 +27,16 @@ public class Imagen
 		this._nombre = _nombre;
 	}
 
+	public String get_carpeta()
+	{
+		return _carpeta;
+	}
+
+	public void set_carpeta(String _carpeta)
+	{
+		this._carpeta = _carpeta;
+	}
+
 	public String get_estado()
 	{
 		return _estado;
@@ -40,16 +51,18 @@ public class Imagen
 	{	
 	}
 	
-	public Imagen(String nombre, String estado)
+	public Imagen(String nombre, String estado, String carpeta)
 	{
 		this._nombre = nombre;
+		this._estado = carpeta;
 		this._estado = estado;	
 	}
 
-	public Imagen(int id, String nombre, String estado)
+	public Imagen(int id, String nombre, String estado, String carpeta)
 	{
 		this._id = id;
 		this._nombre = nombre;
+		this._estado = carpeta;	
 		this._estado = estado;
 	}
 }
