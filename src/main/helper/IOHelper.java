@@ -88,6 +88,42 @@ public class IOHelper
 		}
 		return files;
 	}
+	
+	public List<String> getListImagesInFolder(String folder)
+	{
+		List<String> files = new ArrayList<String>();
+		File fileList = new File(String.format("%s/%s/%s", _externalStoragePath, IMAGES_FOLDER, folder));
+		if (fileList != null)
+		{
+			File[] filenames = fileList.listFiles();
+			for (File tmpf : filenames)
+			{
+				if (tmpf.getName().endsWith(".jpg"))
+				{
+					files.add(tmpf.getName());
+				}
+			}
+		}
+		return files;
+	}
+	
+	public List<String> getListFoldersInGameFolder()
+	{
+		List<String> files = new ArrayList<String>();
+		File fileList = new File(String.format("%s/%s/", _externalStoragePath, IMAGES_FOLDER));
+		if (fileList != null)
+		{
+			File[] filenames = fileList.listFiles();
+			for (File tmpf : filenames)
+			{
+				if (!tmpf.getName().contains("."))
+				{
+					files.add(tmpf.getName());
+				}
+			}
+		}
+		return files;
+	}
 
 	private Context getBaseContext()
 	{
