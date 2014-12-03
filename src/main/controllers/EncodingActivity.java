@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 public class EncodingActivity extends Activity
 {
+	private String carpeta;
 	private TextView tvCurrentPair;
 	private TextView tvCurrentResueltas;
 	private TextView tvCurrentPendientes;
@@ -67,6 +68,11 @@ public class EncodingActivity extends Activity
 		imageButtons.add(btn2);
 		imageButtons.add(btn3);
 		imageButtons.add(btn4);
+		
+		// a futuro, personalizable
+		carpeta = "todas";
+
+		dbh.sincronizarCarpeta(carpeta);
 
 		cargarImagenes();
 		prepararImagenesParaMostrar();
@@ -77,8 +83,8 @@ public class EncodingActivity extends Activity
 
 	private void cargarImagenes()
 	{
-		imagenesPendientes = dbh.findImagenesByEstado("pendiente");
-		imagenesResueltas = dbh.findImagenesByEstado("resuelta");
+		imagenesPendientes = dbh.findImagenesByCarpetaEstado(carpeta, "pendiente");
+		imagenesResueltas = dbh.findImagenesByCarpetaEstado(carpeta, "resuelta");
 
 		imagenesTotal.addAll(imagenesPendientes);
 		imagenesTotal.addAll(imagenesResueltas);
@@ -127,7 +133,7 @@ public class EncodingActivity extends Activity
 			ImageButton imageButton = imageButtons.get(i);
 			Imagen imagen = imagenesParaMostrar.get(i);
 
-			Bitmap imgBitmap = ioh.getBitmapFromImagesFolder(imagen.get_nombre());
+			Bitmap imgBitmap = ioh.getBitmapFromFolder(carpeta, imagen.get_nombre());
 
 			if (imgBitmap != null)
 			{
@@ -169,7 +175,7 @@ public class EncodingActivity extends Activity
 		else
 		{
 			Toast.makeText(this, "Incorrecto...!", Toast.LENGTH_SHORT).show();
-			imagenesPendientes.add(imagenCorrecta);			
+			imagenesPendientes.add(imagenCorrecta);
 		}
 		actualizarContadores();
 
@@ -186,7 +192,7 @@ public class EncodingActivity extends Activity
 		else
 		{
 			crearDialogofinDelJuego().show();
-			dbh.regenerateDB();
+			dbh.reiniciarImagenesByCarpeta(carpeta);
 		}
 	}
 

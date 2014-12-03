@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 public class DecodingActivity extends Activity
 {
+	private String carpeta;
 	private ImageView tvCurrentImage;
 	private TextView tvCurrentResueltas;
 	private TextView tvCurrentPendientes;
@@ -69,6 +70,11 @@ public class DecodingActivity extends Activity
 		pairButtons.add(btn2);
 		pairButtons.add(btn3);
 		pairButtons.add(btn4);
+		
+		// a futuro, personalizable
+		carpeta = "todas";
+		
+		dbh.sincronizarCarpeta(carpeta);
 
 		cargarImagenes();
 		prepararImagenesParaMostrar();
@@ -79,8 +85,8 @@ public class DecodingActivity extends Activity
 
 	private void cargarImagenes()
 	{
-		imagenesPendientes = dbh.findImagenesByEstado("pendiente");
-		imagenesResueltas = dbh.findImagenesByEstado("resuelta");
+		imagenesPendientes = dbh.findImagenesByCarpetaEstado(carpeta, "pendiente");
+		imagenesResueltas = dbh.findImagenesByCarpetaEstado(carpeta, "resuelta");
 
 		imagenesTotal.addAll(imagenesPendientes);
 		imagenesTotal.addAll(imagenesResueltas);
@@ -137,7 +143,7 @@ public class DecodingActivity extends Activity
 	{
 		if (imagenCorrecta != null)
 		{
-			Bitmap imgBitmap = ioh.getBitmapFromImagesFolder(imagenCorrecta.get_nombre());
+			Bitmap imgBitmap = ioh.getBitmapFromFolder(carpeta, imagenCorrecta.get_nombre());
 
 			if (imgBitmap != null)
 			{
@@ -187,7 +193,7 @@ public class DecodingActivity extends Activity
 		else
 		{
 			crearDialogofinDelJuego().show();
-			dbh.regenerateDB();
+			dbh.reiniciarImagenesByCarpeta(carpeta);
 		}
 	}
 
@@ -235,5 +241,5 @@ public class DecodingActivity extends Activity
 			}
 		});
 		return dbNoImages.create();
-	}
+	}	
 }

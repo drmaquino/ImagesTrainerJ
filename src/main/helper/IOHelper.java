@@ -70,7 +70,7 @@ public class IOHelper
 		}
 		return myBitmap;
 	}
-	
+
 	public Bitmap getBitmapFromFolder(String folder, String fileName)
 	{
 		Bitmap myBitmap = null;
@@ -99,7 +99,7 @@ public class IOHelper
 		}
 		return files;
 	}
-	
+
 	public List<String> getListImagesInFolder(String folder)
 	{
 		List<String> files = new ArrayList<String>();
@@ -107,17 +107,20 @@ public class IOHelper
 		if (fileList != null)
 		{
 			File[] filenames = fileList.listFiles();
-			for (File tmpf : filenames)
+			if (filenames != null)
 			{
-				if (tmpf.getName().endsWith(".jpg"))
+				for (File tmpf : filenames)
 				{
-					files.add(tmpf.getName());
+					if (tmpf.getName().endsWith(".jpg"))
+					{
+						files.add(tmpf.getName());
+					}
 				}
 			}
 		}
 		return files;
 	}
-	
+
 	public List<String> getListFoldersInGameFolder()
 	{
 		List<String> files = new ArrayList<String>();

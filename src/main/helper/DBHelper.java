@@ -13,6 +13,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper
 {
 	// All Static variables
+
+	// I/O Helper
+	private IOHelper ioh;
+
 	// Database Version
 	private static final int DATABASE_VERSION = 1;
 
@@ -35,6 +39,7 @@ public class DBHelper extends SQLiteOpenHelper
 	public DBHelper(Context context)
 	{
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		ioh = new IOHelper(context);
 	}
 
 	// Creating Tables
@@ -92,7 +97,7 @@ public class DBHelper extends SQLiteOpenHelper
 		return imagen;
 
 	}
-	
+
 	public List<Imagen> findAllImagenes()
 	{
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -144,13 +149,39 @@ public class DBHelper extends SQLiteOpenHelper
 
 		return imagenes;
 	}
-	
-	public List<Imagen> findImagenesByFolder(String folder)
+
+	public List<Imagen> findImagenesByCarpetaEstado(String carpeta, String estado)
 	{
 		SQLiteDatabase db = this.getReadableDatabase();
 		List<Imagen> imagenes = new ArrayList<Imagen>();
 
-		Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO }, KEY_ESTADO + "=?", new String[] { String.valueOf(folder) }, null, null, null, null);
+		Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO }, KEY_CARPETA + "=?" + " AND " + KEY_ESTADO + " =?", new String[] { carpeta, estado }, null, null, null, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst())
+		{
+			do
+			{
+				Imagen imagen = new Imagen();
+				imagen.set_id(Integer.parseInt(cursor.getString(0)));
+				imagen.set_nombre(cursor.getString(1));
+				imagen.set_carpeta(cursor.getString(2));
+				imagen.set_estado(cursor.getString(3));
+				imagenes.add(imagen);
+			}
+			while (cursor.moveToNext());
+		}
+		db.close();
+
+		return imagenes;
+	}
+
+	public List<Imagen> findImagenesByFolder(String carpeta)
+	{
+		SQLiteDatabase db = this.getReadableDatabase();
+		List<Imagen> imagenes = new ArrayList<Imagen>();
+
+		Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO }, KEY_CARPETA + "=?", new String[] { String.valueOf(carpeta) }, null, null, null, null);
 
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst())
@@ -197,7 +228,7 @@ public class DBHelper extends SQLiteOpenHelper
 		cursor.close();
 		return cursor.getCount();
 	}
-	
+
 	public int countImagenesByEstado(String estado)
 	{
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -213,5 +244,51 @@ public class DBHelper extends SQLiteOpenHelper
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGENES);
 		onCreate(db);
 		db.close();
+	}
+
+	public void sincronizarDB()
+	{
+		List<String> foldersInGameFolder = ioh.getListFoldersInGameFolder();
+
+		for (String carpeta : foldersInGameFolder)
+		{
+			sincronizarCarpeta(carpeta);
+		}
+	}
+
+	public void sincronizarCarpeta(String carpeta)
+	{
+		List<String> imagesInFolder = ioh.getListImagesInFolder(carpeta);
+		List<Imagen> imagesInDB = this.findImagenesByFolder(carpeta);
+
+		for (Imagen imagen : imagesInDB)
+		{
+			int existe = imagesInFolder.indexOf(imagen.get_nombre());
+			if (existe == -1)
+			{
+				this.deleteImagen(imagen);
+			}
+			imagesInFolder.remove(imagen.get_nombre());
+		}
+
+		for (String imagen : imagesInFolder)
+		{
+			Imagen i = new Imagen();
+			i.set_nombre(imagen);
+			i.set_carpeta(carpeta);
+			i.set_estado("pendiente");
+			this.addImagen(i);
+		}
+	}
+
+	public void reiniciarImagenesByCarpeta(String carpeta)
+	{
+		List<Imagen> imagesInDB = this.findImagenesByFolder(carpeta);
+
+		for (Imagen imagen : imagesInDB)
+		{
+			imagen.set_estado("pendiente");
+			updateImagen(imagen);
+		}
 	}
 }
