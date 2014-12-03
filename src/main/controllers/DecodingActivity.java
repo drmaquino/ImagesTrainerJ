@@ -15,21 +15,23 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class DecodingActivity extends Activity
 {
-	private TextView tvCurrentPair;
+	private ImageView tvCurrentImage;
 	private TextView tvCurrentResueltas;
 	private TextView tvCurrentPendientes;
 
-	private List<ImageButton> imageButtons;
-	private ImageButton btn1;
-	private ImageButton btn2;
-	private ImageButton btn3;
-	private ImageButton btn4;
+	private List<Button> pairButtons;
+	private Button btn1;
+	private Button btn2;
+	private Button btn3;
+	private Button btn4;
 
 	private List<Imagen> imagenesPendientes;
 	private List<Imagen> imagenesResueltas;
@@ -48,7 +50,7 @@ public class DecodingActivity extends Activity
 		ioh = new IOHelper(this);
 		dbh = new DBHelper(this);
 
-		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
+		tvCurrentImage = (ImageView) findViewById(R.id.current_image);
 		tvCurrentResueltas = (TextView) findViewById(R.id.current_resueltas);
 		tvCurrentPendientes = (TextView) findViewById(R.id.current_pendientes);
 
@@ -56,17 +58,17 @@ public class DecodingActivity extends Activity
 		imagenesResueltas = new ArrayList<Imagen>();
 		imagenesTotal = new ArrayList<Imagen>();
 		imagenesParaMostrar = new ArrayList<Imagen>();
-		imageButtons = new ArrayList<ImageButton>();
+		pairButtons = new ArrayList<Button>();
 
-		btn1 = (ImageButton) findViewById(R.id.btn1);
-		btn2 = (ImageButton) findViewById(R.id.btn2);
-		btn3 = (ImageButton) findViewById(R.id.btn3);
-		btn4 = (ImageButton) findViewById(R.id.btn4);
+		btn1 = (Button) findViewById(R.id.pair_1);
+		btn2 = (Button) findViewById(R.id.pair_2);
+		btn3 = (Button) findViewById(R.id.pair_3);
+		btn4 = (Button) findViewById(R.id.pair_4);
 
-		imageButtons.add(btn1);
-		imageButtons.add(btn2);
-		imageButtons.add(btn3);
-		imageButtons.add(btn4);
+		pairButtons.add(btn1);
+		pairButtons.add(btn2);
+		pairButtons.add(btn3);
+		pairButtons.add(btn4);
 
 		cargarImagenes();
 		prepararImagenesParaMostrar();
@@ -124,16 +126,10 @@ public class DecodingActivity extends Activity
 
 		for (int i = 0; i < imagenesParaMostrar.size(); i++)
 		{
-			ImageButton imageButton = imageButtons.get(i);
+			Button pairButton = pairButtons.get(i);
 			Imagen imagen = imagenesParaMostrar.get(i);
-
-			Bitmap imgBitmap = ioh.getBitmapFromImagesFolder(imagen.get_nombre());
-
-			if (imgBitmap != null)
-			{
-				imageButton.setImageBitmap(imgBitmap);
-				imageButton.setContentDescription(imagen.get_nombre());
-			}
+			pairButton.setContentDescription(imagen.get_nombre());
+			pairButton.setText(imagen.get_nombre().split("\\.")[0].toUpperCase());
 		}
 	}
 
@@ -141,7 +137,12 @@ public class DecodingActivity extends Activity
 	{
 		if (imagenCorrecta != null)
 		{
-			tvCurrentPair.setText(imagenCorrecta.get_nombre().split("\\.")[0].toUpperCase());
+			Bitmap imgBitmap = ioh.getBitmapFromImagesFolder(imagenCorrecta.get_nombre());
+
+			if (imgBitmap != null)
+			{
+				tvCurrentImage.setImageBitmap(imgBitmap);
+			}
 		}
 	}
 
@@ -153,7 +154,7 @@ public class DecodingActivity extends Activity
 
 	public void buttonClick(View v)
 	{
-		ImageButton button = (ImageButton) v;
+		Button button = (Button) v;
 		String userSelectedPair = (String) button.getContentDescription();
 		chequearRespuesta(userSelectedPair);
 	}
