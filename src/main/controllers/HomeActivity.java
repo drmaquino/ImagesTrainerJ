@@ -36,7 +36,6 @@ public class HomeActivity extends Activity
 	{
 		 Intent intent = new Intent(this, DecodingActivity.class);
 		 startActivity(intent);
-//		Toast.makeText(this, "proximamente", Toast.LENGTH_SHORT).show();
 	}
 
 	public void synchronizeDB()
