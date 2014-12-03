@@ -70,6 +70,17 @@ public class IOHelper
 		}
 		return myBitmap;
 	}
+	
+	public Bitmap getBitmapFromFolder(String folder, String fileName)
+	{
+		Bitmap myBitmap = null;
+		File imgFile = new File(String.format("%s/%s/%s/%s", _externalStoragePath, IMAGES_FOLDER, folder, fileName));
+		if (imgFile.exists())
+		{
+			myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+		}
+		return myBitmap;
+	}
 
 	public List<String> getListImagesInGameFolder()
 	{
