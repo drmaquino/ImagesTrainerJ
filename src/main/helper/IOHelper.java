@@ -70,26 +70,20 @@ public class IOHelper
 			{
 				mFolder.mkdir();
 			}
-			File fRojo = new File(mFolder.getAbsolutePath(), "rojo.jpg");
-			File fAzul = new File(mFolder.getAbsolutePath(), "azul.jpg");
-			File fAmarillo = new File(mFolder.getAbsolutePath(), "amarillo.jpg");
-			File fVerde = new File(mFolder.getAbsolutePath(), "verde.jpg");
-
-			Bitmap bmRojo = getBitmapFromAsset("colores/rojo.jpg");
-			Bitmap bmAzul = getBitmapFromAsset("colores/azul.jpg");
-			Bitmap bmAmarillo = getBitmapFromAsset("colores/amarillo.jpg");
-			Bitmap bmVerde = getBitmapFromAsset("colores/verde.jpg");
-
-			writeBitmapToFile(bmRojo, fRojo);
-			writeBitmapToFile(bmAzul, fAzul);
-			writeBitmapToFile(bmAmarillo, fAmarillo);
-			writeBitmapToFile(bmVerde, fVerde);
+			
+			List<String> assets = listarAssetsEnCarpeta("colores"); 
+			
+			for (String asset : assets)
+			{
+				File f = new File(mFolder.getAbsolutePath(), asset);
+				Bitmap bm = getBitmapFromAsset("colores/" + asset);
+				writeBitmapToFile(bm, f);
+			}
 		}
 		catch (Exception e)
 		{
 			Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
-
 	}
 
 	private void writeBitmapToFile(Bitmap bmp, File filename)
