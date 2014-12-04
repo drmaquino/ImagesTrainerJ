@@ -65,18 +65,19 @@ public class IOHelper
 		File file = null;
 		try
 		{
-			File mFolder = new File(_externalStoragePath + "/" + IMAGES_FOLDER + "/" + "colores");
+			String carpeta = "arquitectura del mundo";
+			File mFolder = new File(_externalStoragePath + "/" + IMAGES_FOLDER + "/" + carpeta);
 			if (!mFolder.exists())
 			{
 				mFolder.mkdir();
 			}
 			
-			List<String> assets = listarAssetsEnCarpeta("colores"); 
+			List<String> assets = listarAssetsEnCarpeta(carpeta); 
 			
 			for (String asset : assets)
 			{
 				File f = new File(mFolder.getAbsolutePath(), asset);
-				Bitmap bm = getBitmapFromAsset("colores/" + asset);
+				Bitmap bm = getBitmapFromAsset(carpeta + "/" + asset);
 				writeBitmapToFile(bm, f);
 			}
 		}
