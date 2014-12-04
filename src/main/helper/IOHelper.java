@@ -2,14 +2,18 @@ package main.helper;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.controllers.R;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class IOHelper
@@ -34,12 +38,84 @@ public class IOHelper
 			{
 				mFolder.mkdir();
 			}
-			file = new File(mFolder.getAbsolutePath(), "readme.txt");
-			saveToFile(file, "aca sueltos van los archivos de imagen.", false);
+
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+			if (!prefs.getBoolean("firstTime", false))
+			{
+				 file = new File(mFolder.getAbsolutePath(), "readme.txt");
+				 saveToFile(file, "aca van las carpetas con los archivos de imagen deseados.\nLos formatos aceptados son: jpg, jpeg, y png.",
+				 false);
+
+				createExampleFolder();
+
+				SharedPreferences.Editor editor = prefs.edit();
+				editor.putBoolean("firstTime", true);
+				editor.commit();
+			}
 		}
 		catch (Exception e)
 		{
 			Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private void createExampleFolder()
+	{
+		File file = null;
+		try
+		{
+			File mFolder = new File(_externalStoragePath + "/" + IMAGES_FOLDER + "/" + "colores");
+			if (!mFolder.exists())
+			{
+				mFolder.mkdir();
+			}
+			File fRojo = new File(mFolder.getAbsolutePath(), "rojo.jpg");
+			File fAzul = new File(mFolder.getAbsolutePath(), "azul.jpg");
+			File fAmarillo = new File(mFolder.getAbsolutePath(), "amarillo.jpg");
+			File fVerde = new File(mFolder.getAbsolutePath(), "verde.jpg");
+
+			Bitmap bmRojo = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.rojo);
+			Bitmap bmAzul = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.azul);
+			Bitmap bmAmarillo = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.amarillo);
+			Bitmap bmVerde = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.verde);
+
+			writeBitmapToFile(bmRojo, fRojo);
+			writeBitmapToFile(bmAzul, fAzul);
+			writeBitmapToFile(bmAmarillo, fAmarillo);
+			writeBitmapToFile(bmVerde, fVerde);
+		}
+		catch (Exception e)
+		{
+			Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+
+	}
+
+	private void writeBitmapToFile(Bitmap bmp, File filename)
+	{
+		FileOutputStream out = null;
+		try
+		{
+			out = new FileOutputStream(filename);
+			bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if (out != null)
+				{
+					out.close();
+				}
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -91,7 +167,7 @@ public class IOHelper
 			File[] filenames = fileList.listFiles();
 			for (File tmpf : filenames)
 			{
-				if (tmpf.getName().endsWith(".jpg"))
+				if (tmpf.getName().endsWith(".jpg") || tmpf.getName().endsWith(".jpeg") || tmpf.getName().endsWith(".png"))
 				{
 					files.add(tmpf.getName());
 				}
@@ -111,7 +187,7 @@ public class IOHelper
 			{
 				for (File tmpf : filenames)
 				{
-					if (tmpf.getName().endsWith(".jpg"))
+					if (tmpf.getName().endsWith(".jpg") || tmpf.getName().endsWith(".jpeg") || tmpf.getName().endsWith(".png"))
 					{
 						files.add(tmpf.getName());
 					}
