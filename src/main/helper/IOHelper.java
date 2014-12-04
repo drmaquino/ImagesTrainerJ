@@ -8,10 +8,10 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.controllers.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -44,9 +44,8 @@ public class IOHelper
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 			if (!prefs.getBoolean("firstTime", false))
 			{
-				 file = new File(mFolder.getAbsolutePath(), "readme.txt");
-				 saveToFile(file, "aca van las carpetas con los archivos de imagen deseados.\nLos formatos aceptados son: jpg, jpeg, y png.",
-				 false);
+				file = new File(mFolder.getAbsolutePath(), "readme.txt");
+				saveToFile(file, "aca van las carpetas con los archivos de imagen deseados.\nLos formatos aceptados son: jpg, jpeg, y png.", false);
 
 				createExampleFolder();
 
@@ -76,10 +75,10 @@ public class IOHelper
 			File fAmarillo = new File(mFolder.getAbsolutePath(), "amarillo.jpg");
 			File fVerde = new File(mFolder.getAbsolutePath(), "verde.jpg");
 
-			Bitmap bmRojo = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.rojo);
-			Bitmap bmAzul = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.azul);
-			Bitmap bmAmarillo = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.amarillo);
-			Bitmap bmVerde = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.verde);
+			Bitmap bmRojo = getBitmapFromAsset("colores/rojo.jpg");
+			Bitmap bmAzul = getBitmapFromAsset("colores/azul.jpg");
+			Bitmap bmAmarillo = getBitmapFromAsset("colores/amarillo.jpg");
+			Bitmap bmVerde = getBitmapFromAsset("colores/verde.jpg");
 
 			writeBitmapToFile(bmRojo, fRojo);
 			writeBitmapToFile(bmAzul, fAzul);
@@ -137,19 +136,22 @@ public class IOHelper
 			Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	}
-	
+
 	public Bitmap getBitmapFromAsset(String strName)
-    {
-        AssetManager assetManager = getBaseContext().getAssets();
-        InputStream istr = null;
-        try {
-            istr = assetManager.open(strName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Bitmap bitmap = BitmapFactory.decodeStream(istr);
-        return bitmap;
-    }
+	{
+		AssetManager assetManager = getBaseContext().getAssets();
+		InputStream istr = null;
+		try
+		{
+			istr = assetManager.open(strName);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		Bitmap bitmap = BitmapFactory.decodeStream(istr);
+		return bitmap;
+	}
 
 	public Bitmap getBitmapFromImagesFolder(String fileName)
 	{
@@ -228,6 +230,29 @@ public class IOHelper
 			}
 		}
 		return files;
+	}
+
+	private List<String> listarAssetsEnCarpeta(String carpeta)
+	{
+		List<String> assets = new ArrayList<String>();
+		Resources res = getBaseContext().getResources(); // if you are in an activity
+		AssetManager am = res.getAssets();
+		String fileList[];
+		try
+		{
+			fileList = am.list(carpeta);
+			if (fileList != null)
+			{
+				for (int i = 0; i < fileList.length; i++)
+				{
+					assets.add(fileList[i]);
+				}
+			}
+		}
+		catch (IOException e)
+		{
+		}
+		return assets;
 	}
 
 	private Context getBaseContext()
