@@ -68,7 +68,7 @@ public class EncodingActivity extends Activity
 		imageButtons.add(btn2);
 		imageButtons.add(btn3);
 		imageButtons.add(btn4);
-		
+
 		carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
 
 		cargarImagenes();
@@ -144,7 +144,15 @@ public class EncodingActivity extends Activity
 	{
 		if (imagenCorrecta != null)
 		{
-			tvCurrentPair.setText(imagenCorrecta.get_nombre().split("\\.")[0].toUpperCase());
+			String nombre = imagenCorrecta.get_nombre().split("\\.")[0];
+			if (nombre.length() > 2)
+			{
+				tvCurrentPair.setText(nombre.substring(0, 1).toUpperCase() + nombre.substring(1, nombre.length()).toLowerCase());
+			}
+			else
+			{
+				tvCurrentPair.setText(nombre.toUpperCase());
+			}
 		}
 	}
 

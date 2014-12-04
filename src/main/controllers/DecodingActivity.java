@@ -132,7 +132,16 @@ public class DecodingActivity extends Activity
 			Button pairButton = pairButtons.get(i);
 			Imagen imagen = imagenesParaMostrar.get(i);
 			pairButton.setContentDescription(imagen.get_nombre());
-			pairButton.setText(imagen.get_nombre().split("\\.")[0].toUpperCase());
+			
+			String nombre = imagen.get_nombre().split("\\.")[0];
+			if (nombre.length() > 2)
+			{
+				pairButton.setText(nombre.substring(0, 1).toUpperCase() + nombre.substring(1, nombre.length()).toLowerCase());
+			}
+			else
+			{
+				pairButton.setText(nombre.toUpperCase());
+			}
 		}
 	}
 
