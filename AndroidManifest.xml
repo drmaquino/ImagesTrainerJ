@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".ListarJuegosActivity"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_listar_juegos"
             android:parentActivityName=".ListarCarpetasActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

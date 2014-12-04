@@ -52,26 +52,30 @@ public final class R {
         public static final int main=0x7f070002;
     }
     public static final class string {
-        public static final int action_settings=0x7f050002;
+        public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int default_description=0x7f050005;
-        public static final int hello_world=0x7f050001;
-        public static final int title_activity_decoding=0x7f050004;
-        public static final int title_activity_encoding=0x7f050003;
+        public static final int default_description=0x7f050006;
+        public static final int title_activity_decoding=0x7f050005;
+        public static final int title_activity_encoding=0x7f050004;
+        public static final int title_activity_listar_carpetas=0x7f050002;
+        public static final int title_activity_listar_juegos=0x7f050003;
     }
     public static final class style {
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
         
 
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
+
     
  API 11 theme customizations can go here. 
 
