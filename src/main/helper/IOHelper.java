@@ -3,6 +3,7 @@ package main.helper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 import main.controllers.R;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -135,6 +137,19 @@ public class IOHelper
 			Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	}
+	
+	public Bitmap getBitmapFromAsset(String strName)
+    {
+        AssetManager assetManager = getBaseContext().getAssets();
+        InputStream istr = null;
+        try {
+            istr = assetManager.open(strName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Bitmap bitmap = BitmapFactory.decodeStream(istr);
+        return bitmap;
+    }
 
 	public Bitmap getBitmapFromImagesFolder(String fileName)
 	{
