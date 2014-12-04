@@ -69,10 +69,7 @@ public class EncodingActivity extends Activity
 		imageButtons.add(btn3);
 		imageButtons.add(btn4);
 		
-		// a futuro, personalizable
-		carpeta = "todas";
-
-		dbh.sincronizarCarpeta(carpeta);
+		carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
 
 		cargarImagenes();
 		prepararImagenesParaMostrar();

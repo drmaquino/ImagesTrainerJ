@@ -1,36 +1,33 @@
 package main.controllers;
 
-import main.helper.DBHelper;
-import main.helper.IOHelper;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class HomeActivity extends Activity
+public class ListarJuegosActivity extends Activity
 {
-	private IOHelper ioh;
-	private DBHelper dbh;
+	private String carpeta;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
-		ioh = new IOHelper(this);
-		dbh = new DBHelper(this);
-		ioh.createGameFolder();
+		setContentView(R.layout.activity_listar_juegos);
+		carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
 	}
 
 	public void launchEncodingActivity(View view)
 	{
 		Intent intent = new Intent(this, EncodingActivity.class);
+		intent.putExtra("carpeta", carpeta);
 		startActivity(intent);
 	}
 
 	public void launchDecodingActivity(View view)
 	{
 		 Intent intent = new Intent(this, DecodingActivity.class);
+		 intent.putExtra("carpeta", carpeta);
 		 startActivity(intent);
 	}
 }

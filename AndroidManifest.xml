@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".HomeActivity"
+            android:name=".ListarCarpetasActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,20 +25,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EncodingActivity"
-            android:label="@string/title_activity_encoding"
-            android:parentActivityName=".HomeActivity" >
+            android:name=".ListarJuegosActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".ListarCarpetasActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="main.controllers.HomeActivity" />
+                android:value="main.controllers.ListarCarpetasActivity" />
+        </activity>
+        <activity
+            android:name=".EncodingActivity"
+            android:label="@string/title_activity_encoding"
+            android:parentActivityName=".ListarJuegosActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="main.controllers.ListarJuegosActivity" />
         </activity>
         <activity
             android:name=".DecodingActivity"
             android:label="@string/title_activity_decoding"
-            android:parentActivityName=".HomeActivity" >
+            android:parentActivityName=".ListarJuegosActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="main.controllers.HomeActivity" />
+                android:value="main.controllers.ListarJuegosActivity" />
         </activity>
     </application>
 

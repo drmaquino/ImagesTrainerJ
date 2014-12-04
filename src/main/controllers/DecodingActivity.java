@@ -71,10 +71,7 @@ public class DecodingActivity extends Activity
 		pairButtons.add(btn3);
 		pairButtons.add(btn4);
 		
-		// a futuro, personalizable
-		carpeta = "todas";
-		
-		dbh.sincronizarCarpeta(carpeta);
+		carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
 
 		cargarImagenes();
 		prepararImagenesParaMostrar();
