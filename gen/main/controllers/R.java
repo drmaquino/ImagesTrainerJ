@@ -22,12 +22,13 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int ic_action_about=0x7f020000;
+        public static final int ic_action_help=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int action_compose=0x7f08000f;
-        public static final int action_search=0x7f08000e;
-        public static final int action_settings=0x7f08000d;
+        public static final int action_about=0x7f08000e;
+        public static final int action_help=0x7f08000d;
         public static final int btn1=0x7f080008;
         public static final int btn2=0x7f080009;
         public static final int btn3=0x7f08000a;
@@ -49,9 +50,7 @@ public final class R {
         public static final int activity_listar_juegos=0x7f030003;
     }
     public static final class menu {
-        public static final int decoding=0x7f070000;
-        public static final int encoding=0x7f070001;
-        public static final int main=0x7f070002;
+        public static final int main=0x7f070000;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;

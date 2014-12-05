@@ -3,14 +3,14 @@
     tools:context="main.controllers.MainActivity" >
 
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_launcher"
+        android:id="@+id/action_help"
+        android:icon="@drawable/ic_action_help"
         android:showAsAction="ifRoom"
-        android:title="search"/>
+        android:title="help"/>
     <item
-        android:id="@+id/action_compose"
-        android:icon="@drawable/ic_launcher"
+        android:id="@+id/action_about"
+        android:icon="@drawable/ic_action_about"
         android:showAsAction="ifRoom"
-        android:title="compose"/>
+        android:title="about"/>
 
 </menu>

@@ -76,7 +76,6 @@ public class ListarCarpetasActivity extends Activity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		// Inflate the menu items for use in the action bar
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main, menu);
 		return super.onCreateOptionsMenu(menu);
@@ -85,16 +84,13 @@ public class ListarCarpetasActivity extends Activity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		// Handle presses on the action bar items
 		switch (item.getItemId())
 		{
-			case R.id.action_search:
-				// openSearch();
-				Toast.makeText(this, "search...", Toast.LENGTH_SHORT).show();
+			case R.id.action_help:
+				Toast.makeText(this, "help...", Toast.LENGTH_SHORT).show();
 				return true;
-			case R.id.action_compose:
-				// composeMessage();
-				Toast.makeText(this, "compose...", Toast.LENGTH_SHORT).show();
+			case R.id.action_about:
+				Toast.makeText(this, "about...", Toast.LENGTH_SHORT).show();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
