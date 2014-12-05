@@ -33,9 +33,15 @@ public class DecodingActivity extends MultipleChoiceActivity
 	{
 		setContentView(R.layout.activity_decoding);
 	}
+	
+	@Override
+	protected void localizarPreguntaEnLayout()
+	{
+		tvCurrentImage = (ImageView) findViewById(R.id.current_image);
+	}
 
 	@Override
-	protected void inicializarRespuestas()
+	protected void localizarRespuestasEnLayout()
 	{
 		pairButtons = new ArrayList<Button>();
 
@@ -48,12 +54,6 @@ public class DecodingActivity extends MultipleChoiceActivity
 		pairButtons.add(btn2);
 		pairButtons.add(btn3);
 		pairButtons.add(btn4);
-	}
-
-	@Override
-	protected void localizarPreguntaEnLayout()
-	{
-		tvCurrentImage = (ImageView) findViewById(R.id.current_image);
 	}
 
 	@Override

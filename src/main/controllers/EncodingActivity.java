@@ -32,9 +32,15 @@ public class EncodingActivity extends MultipleChoiceActivity
 	{
 		setContentView(R.layout.activity_encoding);
 	}
+	
+	@Override
+	protected void localizarPreguntaEnLayout()
+	{
+		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
+	}
 
 	@Override
-	protected void inicializarRespuestas()
+	protected void localizarRespuestasEnLayout()
 	{
 		imageButtons = new ArrayList<ImageButton>();
 
@@ -47,12 +53,6 @@ public class EncodingActivity extends MultipleChoiceActivity
 		imageButtons.add(btn2);
 		imageButtons.add(btn3);
 		imageButtons.add(btn4);
-	}
-
-	@Override
-	protected void localizarPreguntaEnLayout()
-	{
-		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
 	}
 
 	@Override

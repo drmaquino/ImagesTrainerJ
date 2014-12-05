@@ -42,7 +42,7 @@ public abstract class MultipleChoiceActivity extends Activity
 		inicializarListas();
 		localizarContadoresEnLayout();
 		localizarPreguntaEnLayout();
-		inicializarRespuestas();
+		localizarRespuestasEnLayout();
 		cargarImagenes();
 		prepararRespuestasPosibles();
 		mostrarRespuestasPosibles();
@@ -51,20 +51,20 @@ public abstract class MultipleChoiceActivity extends Activity
 	}
 
 	protected abstract void localizarLayout();
-
-	protected void inicializarCarpeta()
-	{
-		carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
-	}
-
-	protected abstract void inicializarRespuestas();
-
-	protected abstract void localizarPreguntaEnLayout();
-
+	
 	protected void localizarContadoresEnLayout()
 	{
 		tvCurrentResueltas = (TextView) findViewById(R.id.current_resueltas);
 		tvCurrentPendientes = (TextView) findViewById(R.id.current_pendientes);
+	}
+	
+	protected abstract void localizarPreguntaEnLayout();
+	
+	protected abstract void localizarRespuestasEnLayout();
+
+	protected void inicializarCarpeta()
+	{
+		carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
 	}
 
 	protected void inicializarListas()
