@@ -11,9 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class DecodingActivity extends EncodingActivity
+public class DecodingActivity extends MultipleChoiceActivity
 {
-
 	private ImageView tvCurrentImage;
 
 	private List<Button> pairButtons;
