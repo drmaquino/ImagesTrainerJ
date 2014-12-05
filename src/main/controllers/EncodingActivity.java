@@ -21,10 +21,10 @@ import android.widget.Toast;
 
 public class EncodingActivity extends Activity
 {
-	private String carpeta;
+	protected String carpeta;
 	private TextView tvCurrentPair;
-	private TextView tvCurrentResueltas;
-	private TextView tvCurrentPendientes;
+	protected TextView tvCurrentResueltas;
+	protected TextView tvCurrentPendientes;
 
 	private List<ImageButton> imageButtons;
 	private ImageButton btn1;
@@ -32,13 +32,13 @@ public class EncodingActivity extends Activity
 	private ImageButton btn3;
 	private ImageButton btn4;
 
-	private List<Imagen> imagenesPendientes;
-	private List<Imagen> imagenesResueltas;
-	private List<Imagen> imagenesTotal;
-	private List<Imagen> imagenesParaMostrar;
-	private Imagen imagenCorrecta;
-	private IOHelper ioh;
-	private DBHelper dbh;
+	protected List<Imagen> imagenesPendientes;
+	protected List<Imagen> imagenesResueltas;
+	protected List<Imagen> imagenesTotal;
+	protected List<Imagen> imagenesParaMostrar;
+	protected Imagen imagenCorrecta;
+	protected IOHelper ioh;
+	protected DBHelper dbh;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -57,6 +57,7 @@ public class EncodingActivity extends Activity
 		imagenesResueltas = new ArrayList<Imagen>();
 		imagenesTotal = new ArrayList<Imagen>();
 		imagenesParaMostrar = new ArrayList<Imagen>();
+		
 		imageButtons = new ArrayList<ImageButton>();
 
 		btn1 = (ImageButton) findViewById(R.id.btn1);
@@ -78,7 +79,7 @@ public class EncodingActivity extends Activity
 		actualizarContadores();
 	}
 
-	private void cargarImagenes()
+	protected void cargarImagenes()
 	{
 		imagenesPendientes = dbh.findImagenesByCarpetaEstado(carpeta, "pendiente");
 		imagenesResueltas = dbh.findImagenesByCarpetaEstado(carpeta, "resuelta");
@@ -92,7 +93,7 @@ public class EncodingActivity extends Activity
 		}
 	}
 
-	private void prepararImagenesParaMostrar()
+	protected void prepararImagenesParaMostrar()
 	{
 		int index;
 		Random random;
@@ -156,7 +157,7 @@ public class EncodingActivity extends Activity
 		}
 	}
 
-	private void actualizarContadores()
+	protected void actualizarContadores()
 	{
 		tvCurrentResueltas.setText(String.format("Resueltas: %s", imagenesResueltas.size()));
 		tvCurrentPendientes.setText(String.format("Pendientes: %s", imagenesPendientes.size()));
@@ -169,7 +170,7 @@ public class EncodingActivity extends Activity
 		chequearRespuesta(userSelectedPair);
 	}
 
-	private void chequearRespuesta(String userSelectedPair)
+	protected void chequearRespuesta(String userSelectedPair)
 	{
 		if (imagenCorrecta.get_nombre().equals(userSelectedPair))
 		{
@@ -201,7 +202,7 @@ public class EncodingActivity extends Activity
 		}
 	}
 
-	private AlertDialog crearDialogofinDelJuego()
+	protected AlertDialog crearDialogofinDelJuego()
 	{
 		Builder dbConfirmacionReinicio = new AlertDialog.Builder(this);
 		dbConfirmacionReinicio.setTitle("Fin del juego");
@@ -227,7 +228,7 @@ public class EncodingActivity extends Activity
 		return dbConfirmacionReinicio.create();
 	}
 
-	private AlertDialog crearDialogoNoHayImagenes()
+	protected AlertDialog crearDialogoNoHayImagenes()
 	{
 		Builder dbNoImages = new AlertDialog.Builder(this);
 		dbNoImages.setTitle("Carpeta vacía");
