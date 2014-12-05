@@ -25,6 +25,8 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+        public static final int action_compose=0x7f08000f;
+        public static final int action_search=0x7f08000e;
         public static final int action_settings=0x7f08000d;
         public static final int btn1=0x7f080008;
         public static final int btn2=0x7f080009;

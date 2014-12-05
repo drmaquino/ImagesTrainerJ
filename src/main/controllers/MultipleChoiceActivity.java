@@ -37,12 +37,12 @@ public abstract class MultipleChoiceActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		localizarLayout();
-		inicializarCarpeta();
-		inicializarHelpers();
-		inicializarListas();
 		localizarContadoresEnLayout();
 		localizarPreguntaEnLayout();
 		localizarRespuestasEnLayout();
+		inicializarCarpeta();
+		inicializarHelpers();
+		inicializarListas();		
 		cargarImagenes();
 		prepararRespuestasPosibles();
 		mostrarRespuestasPosibles();
