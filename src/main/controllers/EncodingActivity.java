@@ -44,20 +44,40 @@ public class EncodingActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_encoding);
-
-		ioh = new IOHelper(this);
-		dbh = new DBHelper(this);
-
-		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
-		tvCurrentResueltas = (TextView) findViewById(R.id.current_resueltas);
-		tvCurrentPendientes = (TextView) findViewById(R.id.current_pendientes);
-
-		imagenesPendientes = new ArrayList<Imagen>();
-		imagenesResueltas = new ArrayList<Imagen>();
-		imagenesTotal = new ArrayList<Imagen>();
-		imagenesParaMostrar = new ArrayList<Imagen>();
 		
+		localizarLayout();
+		
+		inicializarCarpeta();
+
+		inicializarHelpers();
+		
+		inicializarListas();
+
+		localizarContadoresEnLayout();
+		
+		localizarPreguntaEnLayout();
+				
+		inicializarRespuestas();
+
+		cargarImagenes();
+		prepararRespuestasPosibles();
+		mostrarRespuestasPosibles();
+		mostrarPregunta();
+		actualizarContadores();
+	}
+
+	protected void localizarLayout()
+	{
+		setContentView(R.layout.activity_encoding);
+	}
+
+	protected void inicializarCarpeta()
+	{
+		carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
+	}
+
+	protected void inicializarRespuestas()
+	{
 		imageButtons = new ArrayList<ImageButton>();
 
 		btn1 = (ImageButton) findViewById(R.id.btn1);
@@ -69,14 +89,31 @@ public class EncodingActivity extends Activity
 		imageButtons.add(btn2);
 		imageButtons.add(btn3);
 		imageButtons.add(btn4);
+	}
 
-		carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
+	protected void localizarPreguntaEnLayout()
+	{
+		tvCurrentPair = (TextView) findViewById(R.id.current_pair);
+	}
 
-		cargarImagenes();
-		prepararImagenesParaMostrar();
-		mostrarImagenesPorPantalla();
-		mostrarElParQueDeseoEvaluar();
-		actualizarContadores();
+	protected void localizarContadoresEnLayout()
+	{
+		tvCurrentResueltas = (TextView) findViewById(R.id.current_resueltas);
+		tvCurrentPendientes = (TextView) findViewById(R.id.current_pendientes);
+	}
+
+	protected void inicializarListas()
+	{
+		imagenesPendientes = new ArrayList<Imagen>();
+		imagenesResueltas = new ArrayList<Imagen>();
+		imagenesTotal = new ArrayList<Imagen>();
+		imagenesParaMostrar = new ArrayList<Imagen>();
+	}
+
+	protected void inicializarHelpers()
+	{
+		ioh = new IOHelper(this);
+		dbh = new DBHelper(this);
 	}
 
 	protected void cargarImagenes()
@@ -93,7 +130,7 @@ public class EncodingActivity extends Activity
 		}
 	}
 
-	protected void prepararImagenesParaMostrar()
+	protected void prepararRespuestasPosibles()
 	{
 		int index;
 		Random random;
@@ -122,7 +159,7 @@ public class EncodingActivity extends Activity
 		}
 	}
 
-	private void mostrarImagenesPorPantalla()
+	protected void mostrarRespuestasPosibles()
 	{
 		Collections.shuffle(imagenesParaMostrar);
 
@@ -141,7 +178,7 @@ public class EncodingActivity extends Activity
 		}
 	}
 
-	private void mostrarElParQueDeseoEvaluar()
+	protected void mostrarPregunta()
 	{
 		if (imagenCorrecta != null)
 		{
@@ -191,9 +228,9 @@ public class EncodingActivity extends Activity
 
 		if (!imagenesPendientes.isEmpty())
 		{
-			prepararImagenesParaMostrar();
-			mostrarImagenesPorPantalla();
-			mostrarElParQueDeseoEvaluar();
+			prepararRespuestasPosibles();
+			mostrarRespuestasPosibles();
+			mostrarPregunta();
 		}
 		else
 		{

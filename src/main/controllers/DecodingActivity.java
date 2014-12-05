@@ -3,28 +3,18 @@ package main.controllers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
-import main.helper.DBHelper;
-import main.helper.IOHelper;
 import main.model.Imagen;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class DecodingActivity extends EncodingActivity
 {
-//	private String carpeta;
+
 	private ImageView tvCurrentImage;
-//	private TextView tvCurrentResueltas;
-//	private TextView tvCurrentPendientes;
 
 	private List<Button> pairButtons;
 	private Button btn1;
@@ -32,32 +22,22 @@ public class DecodingActivity extends EncodingActivity
 	private Button btn3;
 	private Button btn4;
 
-//	private List<Imagen> imagenesPendientes;
-//	private List<Imagen> imagenesResueltas;
-//	private List<Imagen> imagenesTotal;
-//	private List<Imagen> imagenesParaMostrar;
-//	private Imagen imagenCorrecta;
-//	private IOHelper ioh;
-//	private DBHelper dbh;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	protected void localizarLayout()
+	{
 		setContentView(R.layout.activity_decoding);
+	}
 
-		ioh = new IOHelper(this);
-		dbh = new DBHelper(this);
-
-		tvCurrentImage = (ImageView) findViewById(R.id.current_image);
-		tvCurrentResueltas = (TextView) findViewById(R.id.current_resueltas);
-		tvCurrentPendientes = (TextView) findViewById(R.id.current_pendientes);
-
-		imagenesPendientes = new ArrayList<Imagen>();
-		imagenesResueltas = new ArrayList<Imagen>();
-		imagenesTotal = new ArrayList<Imagen>();
-		imagenesParaMostrar = new ArrayList<Imagen>();
-		
+	@Override
+	protected void inicializarRespuestas()
+	{
 		pairButtons = new ArrayList<Button>();
 
 		btn1 = (Button) findViewById(R.id.pair_1);
@@ -69,17 +49,16 @@ public class DecodingActivity extends EncodingActivity
 		pairButtons.add(btn2);
 		pairButtons.add(btn3);
 		pairButtons.add(btn4);
-		
-		carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
-
-		cargarImagenes();
-		prepararImagenesParaMostrar();
-		mostrarParesPorPantalla();
-		mostrarLaImagenQueDeseoEvaluar();
-		actualizarContadores();
 	}
 
-	private void mostrarParesPorPantalla()
+	@Override
+	protected void localizarPreguntaEnLayout()
+	{
+		tvCurrentImage = (ImageView) findViewById(R.id.current_image);
+	}
+
+	@Override
+	protected void mostrarRespuestasPosibles()
 	{
 		Collections.shuffle(imagenesParaMostrar);
 
@@ -101,7 +80,8 @@ public class DecodingActivity extends EncodingActivity
 		}
 	}
 
-	private void mostrarLaImagenQueDeseoEvaluar()
+	@Override
+	protected void mostrarPregunta()
 	{
 		if (imagenCorrecta != null)
 		{
@@ -114,6 +94,7 @@ public class DecodingActivity extends EncodingActivity
 		}
 	}
 
+	@Override
 	public void buttonClick(View v)
 	{
 		Button button = (Button) v;
