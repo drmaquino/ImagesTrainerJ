@@ -93,7 +93,7 @@ public class ListarCarpetasActivity extends Activity
                 crearDialogoAbout().show();
                 return true;
             case R.id.action_help:
-                Toast.makeText(this, "help...", Toast.LENGTH_SHORT).show();
+            	crearDialogoHelp().show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -107,10 +107,27 @@ public class ListarCarpetasActivity extends Activity
         String msg = "";
         msg += "\nCreado por:";
         msg += "\nMariano Aquino";
-        msg += "\n";  
-        msg += "\nVersión 1.0";      
-        msg += "\n";
+        msg += "\nVersión 1.0";
         msg += "\n06/12/2014";
+        msg += "\n";
+        dbAbout.setMessage(msg);
+        dbAbout.setNeutralButton("Cerrar", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                dialog.dismiss();
+            }
+        });
+        return dbAbout.create();
+    }
+    
+    private AlertDialog crearDialogoHelp()
+    {
+        Builder dbAbout = new AlertDialog.Builder(this);
+        dbAbout.setTitle("Help");
+        String msg = "";
+        msg += "\nAcá va la ayuda!";
+        msg += "\n";
         dbAbout.setMessage(msg);
         dbAbout.setNeutralButton("Cerrar", new DialogInterface.OnClickListener()
         {
