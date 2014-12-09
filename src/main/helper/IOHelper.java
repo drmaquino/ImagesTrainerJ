@@ -62,7 +62,6 @@ public class IOHelper
 
 	private void createExampleFolder()
 	{
-		File file = null;
 		try
 		{
 			String carpeta = "arquitectura del mundo";
