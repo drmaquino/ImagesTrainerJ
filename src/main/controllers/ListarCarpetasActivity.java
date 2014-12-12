@@ -92,6 +92,10 @@ public class ListarCarpetasActivity extends Activity
             case R.id.action_about:
                 crearDialogoAbout().show();
                 return true;
+            case R.id.action_refresh_db:
+                dbh.regenerateDB();
+                Toast.makeText(getBaseContext(), "Base de datos reiniciada!", Toast.LENGTH_SHORT).show();
+                return true;
             case R.id.action_help:
             	crearDialogoHelp().show();
                 return true;
