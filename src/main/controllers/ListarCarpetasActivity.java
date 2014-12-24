@@ -69,7 +69,7 @@ public class ListarCarpetasActivity extends Activity
                 String carpeta = carpetas.get(position);
                 Toast.makeText(getApplicationContext(), "sincronizando \"" + carpeta + "\"...", Toast.LENGTH_SHORT).show();
                 dbh.sincronizarCarpeta(carpeta);
-                Intent intent = new Intent(getApplicationContext(), ListarJuegosActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ModoDePracticaActivity.class);
                 intent.putExtra("carpeta", carpeta);
                 startActivity(intent);
             }

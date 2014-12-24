@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class ListarJuegosActivity extends Activity
+public class ModoDePracticaActivity extends Activity
 {
 	private String carpeta;
 
@@ -13,7 +13,7 @@ public class ListarJuegosActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_listar_juegos);
+		setContentView(R.layout.activity_modo_de_practica);
 		carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
 	}
 

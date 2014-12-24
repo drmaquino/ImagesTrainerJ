@@ -25,8 +25,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ListarJuegosActivity"
-            android:label="@string/title_activity_listar_juegos"
+            android:name=".ModoDePracticaActivity"
+            android:label="@string/title_activity_modo_de_practica"
             android:parentActivityName=".ListarCarpetasActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -35,7 +35,7 @@
         <activity
             android:name=".EncodingActivity"
             android:label="@string/title_activity_encoding"
-            android:parentActivityName=".ListarJuegosActivity" >
+            android:parentActivityName=".ModoDePracticaActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.controllers.ListarJuegosActivity" />
@@ -43,7 +43,7 @@
         <activity
             android:name=".DecodingActivity"
             android:label="@string/title_activity_decoding"
-            android:parentActivityName=".ListarJuegosActivity" >
+            android:parentActivityName=".ModoDePracticaActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.controllers.ListarJuegosActivity" />
