@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class EncodingActivity extends MultipleChoiceActivity
+public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
 {
 	private TextView tvCurrentPair;
 

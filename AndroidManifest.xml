@@ -33,7 +33,7 @@
                 android:value="main.controllers.ListarCarpetasActivity" />
         </activity>
         <activity
-            android:name=".EncodingActivity"
+            android:name=".DesdeNombreHaciaImagenActivity"
             android:label="@string/title_activity_encoding"
             android:parentActivityName=".ModoDePracticaActivity" >
             <meta-data
@@ -41,7 +41,7 @@
                 android:value="main.controllers.ListarJuegosActivity" />
         </activity>
         <activity
-            android:name=".DecodingActivity"
+            android:name=".DesdeImagenHaciaNombreActivity"
             android:label="@string/title_activity_decoding"
             android:parentActivityName=".ModoDePracticaActivity" >
             <meta-data

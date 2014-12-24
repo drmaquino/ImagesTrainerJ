@@ -26,21 +26,21 @@ public class ModoDePracticaActivity extends Activity
 
     public void launchEncodingActivity(View view)
     {
-        Intent intent = new Intent(this, EncodingActivity.class);
+        Intent intent = new Intent(this, DesdeNombreHaciaImagenActivity.class);
         intent.putExtra("carpeta", carpeta);
         startActivity(intent);
     }
 
     public void launchDecodingActivity(View view)
     {
-        Intent intent = new Intent(this, DecodingActivity.class);
+        Intent intent = new Intent(this, DesdeImagenHaciaNombreActivity.class);
         intent.putExtra("carpeta", carpeta);
         startActivity(intent);
     }
 
     public void comenzarPractica(View view)
     {
-        Intent intent = new Intent(this, DecodingActivity.class);
+        Intent intent = new Intent(this, DesdeImagenHaciaNombreActivity.class);
         
         String texto_desde = desde.getSelectedItem().toString();
         String texto_hacia = hacia.getSelectedItem().toString();
