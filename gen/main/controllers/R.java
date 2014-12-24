@@ -47,8 +47,8 @@ public final class R {
         public static final int pair_2=0x7f090004;
         public static final int pair_3=0x7f090005;
         public static final int pair_4=0x7f090006;
-        public static final int spinner1=0x7f09000d;
-        public static final int spinner2=0x7f09000e;
+        public static final int spinner_desde=0x7f09000d;
+        public static final int spinner_hacia=0x7f09000e;
     }
     public static final class layout {
         public static final int activity_decoding=0x7f030000;

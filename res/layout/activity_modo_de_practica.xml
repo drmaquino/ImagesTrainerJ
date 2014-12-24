@@ -19,7 +19,7 @@
         android:textColor="@android:color/background_light" />
 
     <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/spinner_desde"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -35,7 +35,7 @@
         android:textColor="@android:color/background_light" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/spinner_hacia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
