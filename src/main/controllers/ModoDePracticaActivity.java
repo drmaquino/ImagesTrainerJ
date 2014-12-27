@@ -25,24 +25,12 @@ public class ModoDePracticaActivity extends Activity
         carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
     }
 
-    public void launchEncodingActivity()
-    {
-        Intent intent = new Intent(this, DesdeNombreHaciaImagenActivity.class);
-        intent.putExtra("carpeta", carpeta);
-        startActivity(intent);
-    }
-
-    public void launchDecodingActivity()
-    {
-        Intent intent = new Intent(this, DesdeImagenHaciaNombreActivity.class);
-        intent.putExtra("carpeta", carpeta);
-        startActivity(intent);
-    }
-
     public void comenzarPractica(View view)
     {
         String texto_desde = desde.getSelectedItem().toString();
         String texto_hacia = hacia.getSelectedItem().toString();
+        
+        Intent intent = null;
         
         if (texto_desde.equals(texto_hacia))
         {
@@ -50,11 +38,27 @@ public class ModoDePracticaActivity extends Activity
         }
         else if (texto_desde.equals("Imagen") && texto_hacia.equals("Nombre"))
         {
-            launchDecodingActivity();
+            intent = new Intent(this, DesdeImagenHaciaNombreActivity.class);
         }
         else if (texto_desde.equals("Nombre") && texto_hacia.equals("Imagen"))
         {
-            launchEncodingActivity();
+            intent = new Intent(this, DesdeNombreHaciaImagenActivity.class);
+        }
+        else if (texto_desde.equals("Descripcion") && texto_hacia.equals("Imagen"))
+        {
+            intent = new Intent(this, DesdeNombreHaciaImagenActivity.class);            
+        }
+        else
+        {
+            Toast.makeText(getBaseContext(), "Combinacion aún no disponible", Toast.LENGTH_SHORT).show();
+        }
+        
+        if (intent != null)
+        {
+            intent.putExtra("carpeta", carpeta);
+            intent.putExtra("desde", texto_desde);
+            intent.putExtra("hacia", texto_hacia);
+            startActivity(intent);
         }
     }
 }
