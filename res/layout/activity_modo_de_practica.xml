@@ -55,27 +55,4 @@
         android:text="@string/btn_comenzar"
         android:textColor="@android:color/white" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/background_dark"
-        android:orientation="horizontal" >
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="launchEncodingActivity"
-            android:text="@string/title_activity_encoding"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="launchDecodingActivity"
-            android:text="@string/title_activity_decoding"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
 </LinearLayout>

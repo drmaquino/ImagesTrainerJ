@@ -40,8 +40,6 @@ public class ModoDePracticaActivity extends Activity
 
     public void comenzarPractica(View view)
     {
-//        Intent intent = null;
-
         String texto_desde = desde.getSelectedItem().toString();
         String texto_hacia = hacia.getSelectedItem().toString();
 
@@ -53,13 +51,5 @@ public class ModoDePracticaActivity extends Activity
         {
             launchEncodingActivity();
         }
-
-//        if (intent != null)
-//        {
-//            intent.putExtra("carpeta", carpeta);
-//            intent.putExtra("desde", texto_desde);
-//            intent.putExtra("hasta", texto_hacia);
-//            startActivity(intent);
-//        }
     }
 }
