@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class ModoDePracticaActivity extends Activity
 {
@@ -42,8 +43,12 @@ public class ModoDePracticaActivity extends Activity
     {
         String texto_desde = desde.getSelectedItem().toString();
         String texto_hacia = hacia.getSelectedItem().toString();
-
-        if (texto_desde.equals("Imagen") && texto_hacia.equals("Nombre"))
+        
+        if (texto_desde.equals(texto_hacia))
+        {
+            Toast.makeText(getBaseContext(), "No puedes elegir la misma opcion dos veces", Toast.LENGTH_SHORT).show();
+        }
+        else if (texto_desde.equals("Imagen") && texto_hacia.equals("Nombre"))
         {
             launchDecodingActivity();
         }
