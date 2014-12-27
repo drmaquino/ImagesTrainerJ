@@ -24,14 +24,14 @@ public class ModoDePracticaActivity extends Activity
         carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
     }
 
-    public void launchEncodingActivity(View view)
+    public void launchEncodingActivity()
     {
         Intent intent = new Intent(this, DesdeNombreHaciaImagenActivity.class);
         intent.putExtra("carpeta", carpeta);
         startActivity(intent);
     }
 
-    public void launchDecodingActivity(View view)
+    public void launchDecodingActivity()
     {
         Intent intent = new Intent(this, DesdeImagenHaciaNombreActivity.class);
         intent.putExtra("carpeta", carpeta);
@@ -40,15 +40,26 @@ public class ModoDePracticaActivity extends Activity
 
     public void comenzarPractica(View view)
     {
-        Intent intent = new Intent(this, DesdeImagenHaciaNombreActivity.class);
-        
+//        Intent intent = null;
+
         String texto_desde = desde.getSelectedItem().toString();
         String texto_hacia = hacia.getSelectedItem().toString();
 
-        intent.putExtra("carpeta", carpeta);
-        intent.putExtra("desde", texto_desde);
-        intent.putExtra("hasta", texto_hacia);
-        
-        startActivity(intent);
+        if (texto_desde.equals("Imagen") && texto_hacia.equals("Nombre"))
+        {
+            launchDecodingActivity();
+        }
+        else if (texto_desde.equals("Nombre") && texto_hacia.equals("Imagen"))
+        {
+            launchEncodingActivity();
+        }
+
+//        if (intent != null)
+//        {
+//            intent.putExtra("carpeta", carpeta);
+//            intent.putExtra("desde", texto_desde);
+//            intent.putExtra("hasta", texto_hacia);
+//            startActivity(intent);
+//        }
     }
 }

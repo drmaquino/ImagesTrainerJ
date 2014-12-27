@@ -51,8 +51,8 @@ public final class R {
         public static final int spinner_hacia=0x7f09000e;
     }
     public static final class layout {
-        public static final int activity_decoding=0x7f030000;
-        public static final int activity_encoding=0x7f030001;
+        public static final int activity_desde_image_hacia_nombre=0x7f030000;
+        public static final int activity_desde_nombre_hacia_imagen=0x7f030001;
         public static final int activity_listar_carpetas=0x7f030002;
         public static final int activity_modo_de_practica=0x7f030003;
         public static final int dialog_custom=0x7f030004;
