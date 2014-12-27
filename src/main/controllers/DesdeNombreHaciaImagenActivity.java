@@ -64,8 +64,18 @@ public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
 		{
 			ImageButton imageButton = imageButtons.get(i);
 			Imagen imagen = imagenesParaMostrar.get(i);
+			
+			String nombre_real;
+            if (!imagenCorrecta.get_descripcion().equals(""))
+            {
+                nombre_real = String.format("%s (%s)", imagen.get_nombre(), imagen.get_descripcion());
+            }
+            else
+            {
+                nombre_real = imagen.get_nombre();
+            }
 
-			Bitmap imgBitmap = ioh.getBitmapFromFolder(carpeta, imagen.get_nombre());
+			Bitmap imgBitmap = ioh.getBitmapFromFolder(carpeta, nombre_real);
 
 			if (imgBitmap != null)
 			{
