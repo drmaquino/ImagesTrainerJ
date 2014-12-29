@@ -8,6 +8,7 @@ public class Imagen
 	private String _estado;
 	private String _descripcion;
 	private String _extension;
+	private String _filename;
 
 	public int get_id()
 	{
@@ -69,20 +70,31 @@ public class Imagen
         this._extension = _extension;
     }
 
+    public String get_filename()
+    {
+        return _filename;
+    }
+
+    public void set_filename(String _filename)
+    {
+        this._filename = _filename;
+    }
+
     public Imagen()
 	{	
 	}
 	
-	public Imagen(String nombre, String estado, String carpeta, String descripcion, String extension)
+	public Imagen(String nombre, String estado, String carpeta, String descripcion, String extension, String filename)
 	{
 		this._nombre = nombre;
 		this._estado = carpeta;
 		this._estado = estado;
 		this._descripcion = descripcion;
 		this._extension = extension;
+		this._filename = filename;
 	}
 
-	public Imagen(int id, String nombre, String estado, String carpeta, String descripcion, String extension)
+	public Imagen(int id, String nombre, String estado, String carpeta, String descripcion, String extension, String filename)
 	{
 		this._id = id;
 		this._nombre = nombre;
@@ -90,5 +102,6 @@ public class Imagen
 		this._estado = estado;
 		this._descripcion = descripcion;
 		this._extension = extension;
+        this._filename = filename;
 	}
 }
