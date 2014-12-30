@@ -34,8 +34,9 @@ public class DBHelper extends SQLiteOpenHelper
     private static final String KEY_CARPETA = "carpeta";
     private static final String KEY_ESTADO = "estado";
     private static final String KEY_DESCRIPCION = "descripcion";
+    private static final String KEY_EXTENSION = "extension";
 
-    private static String CREATE_TABLE_IMAGENES = "CREATE TABLE " + TABLE_IMAGENES + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NOMBRE + " TEXT," + KEY_CARPETA + " TEXT," + KEY_ESTADO + " TEXT," + KEY_DESCRIPCION + " TEXT" + ")";
+    private static final String CREATE_TABLE_IMAGENES = "CREATE TABLE " + TABLE_IMAGENES + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NOMBRE + " TEXT," + KEY_CARPETA + " TEXT," + KEY_ESTADO + " TEXT," + KEY_DESCRIPCION + " TEXT," + KEY_EXTENSION + " TEXT" + ")";
 
     public DBHelper(Context context)
     {
@@ -74,6 +75,7 @@ public class DBHelper extends SQLiteOpenHelper
         values.put(KEY_CARPETA, imagen.get_carpeta());
         values.put(KEY_ESTADO, imagen.get_estado());
         values.put(KEY_DESCRIPCION, imagen.get_descripcion());
+        values.put(KEY_EXTENSION, imagen.get_extension());
         db.insert(TABLE_IMAGENES, null, values);
         db.close();
 
@@ -84,7 +86,7 @@ public class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getReadableDatabase();
         Imagen imagen = new Imagen();
 
-        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION }, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION, KEY_EXTENSION }, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor.moveToFirst())
         {
             imagen.set_id(Integer.parseInt(cursor.getString(0)));
@@ -92,6 +94,7 @@ public class DBHelper extends SQLiteOpenHelper
             imagen.set_carpeta(cursor.getString(2));
             imagen.set_estado(cursor.getString(3));
             imagen.set_descripcion(cursor.getString(4));
+            imagen.set_extension(cursor.getString(5));
             db.close();
         }
         else
@@ -106,7 +109,7 @@ public class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getReadableDatabase();
         List<Imagen> imagenes = new ArrayList<Imagen>();
 
-        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION }, null, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION, KEY_EXTENSION }, null, null, null, null, null, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst())
@@ -119,6 +122,7 @@ public class DBHelper extends SQLiteOpenHelper
                 imagen.set_carpeta(cursor.getString(2));
                 imagen.set_estado(cursor.getString(3));
                 imagen.set_descripcion(cursor.getString(4));
+                imagen.set_extension(cursor.getString(5));
                 imagenes.add(imagen);
             }
             while (cursor.moveToNext());
@@ -133,7 +137,7 @@ public class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getReadableDatabase();
         List<Imagen> imagenes = new ArrayList<Imagen>();
 
-        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION }, KEY_ESTADO + "=?", new String[] { String.valueOf(estado) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION, KEY_EXTENSION }, KEY_ESTADO + "=?", new String[] { String.valueOf(estado) }, null, null, null, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst())
@@ -146,6 +150,7 @@ public class DBHelper extends SQLiteOpenHelper
                 imagen.set_carpeta(cursor.getString(2));
                 imagen.set_estado(cursor.getString(3));
                 imagen.set_descripcion(cursor.getString(4));
+                imagen.set_extension(cursor.getString(5));
                 imagenes.add(imagen);
             }
             while (cursor.moveToNext());
@@ -160,7 +165,7 @@ public class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getReadableDatabase();
         List<Imagen> imagenes = new ArrayList<Imagen>();
 
-        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION }, KEY_CARPETA + "=?" + " AND " + KEY_ESTADO + " =?", new String[] { carpeta, estado }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION, KEY_EXTENSION }, KEY_CARPETA + "=?" + " AND " + KEY_ESTADO + " =?", new String[] { carpeta, estado }, null, null, null, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst())
@@ -173,6 +178,7 @@ public class DBHelper extends SQLiteOpenHelper
                 imagen.set_carpeta(cursor.getString(2));
                 imagen.set_estado(cursor.getString(3));
                 imagen.set_descripcion(cursor.getString(4));
+                imagen.set_extension(cursor.getString(5));
                 imagenes.add(imagen);
             }
             while (cursor.moveToNext());
@@ -187,7 +193,7 @@ public class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getReadableDatabase();
         List<Imagen> imagenes = new ArrayList<Imagen>();
 
-        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION }, KEY_CARPETA + "=?", new String[] { String.valueOf(carpeta) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION, KEY_EXTENSION }, KEY_CARPETA + "=?", new String[] { String.valueOf(carpeta) }, null, null, null, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst())
@@ -200,6 +206,7 @@ public class DBHelper extends SQLiteOpenHelper
                 imagen.set_carpeta(cursor.getString(2));
                 imagen.set_estado(cursor.getString(3));
                 imagen.set_descripcion(cursor.getString(4));
+                imagen.set_extension(cursor.getString(5));
                 imagenes.add(imagen);
             }
             while (cursor.moveToNext());
@@ -237,7 +244,7 @@ public class DBHelper extends SQLiteOpenHelper
     public int countImagenes()
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION }, null, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION, KEY_EXTENSION }, null, null, null, null, null, null);
         cursor.moveToFirst();
         cursor.close();
         return cursor.getCount();
@@ -246,7 +253,7 @@ public class DBHelper extends SQLiteOpenHelper
     public int countImagenesByEstado(String estado)
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION }, KEY_ESTADO + "=?", new String[] { String.valueOf(estado) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_IMAGENES, new String[] { KEY_ID, KEY_NOMBRE, KEY_CARPETA, KEY_ESTADO, KEY_DESCRIPCION, KEY_EXTENSION }, KEY_ESTADO + "=?", new String[] { String.valueOf(estado) }, null, null, null, null);
         cursor.moveToFirst();
         cursor.close();
         return cursor.getCount();
@@ -307,37 +314,21 @@ public class DBHelper extends SQLiteOpenHelper
 
         for (Imagen imagen : imagesInDB)
         {
-            int existe = imagesInFolder.indexOf(imagen.get_nombre());
+            int existe = imagesInFolder.indexOf(imagen.get_filename());
             if (existe == -1)
             {
                 this.deleteImagen(imagen);
             }
-            imagesInFolder.remove(imagen.get_nombre());
+            imagesInFolder.remove(imagen.get_filename());
         }
 
         for (String imagen : imagesInFolder)
         {
             Imagen i = new Imagen();
-
-            String nombre;
-            String descripcion;
-            
-            if (imagen.contains(" (") && imagen.contains(")"))
-            {
-                nombre = imagen.split(" \\(")[0];
-                descripcion = imagen.split(" \\(")[1].split("\\)")[0];
-                
-                i.set_nombre(nombre);
-                i.set_descripcion(descripcion);
-            }
-            else
-            {
-                i.set_nombre(imagen);
-                i.set_descripcion("");
-            }
-
+            i.set_filename(imagen);
             i.set_carpeta(carpeta);
             i.set_estado("pendiente");
+
             this.addImagen(i);
         }
     }
