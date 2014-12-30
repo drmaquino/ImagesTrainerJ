@@ -285,4 +285,18 @@ public abstract class MultipleChoiceActivity extends Activity
         });
         return dbAbout.create();
     }
+	
+    protected String capitalize(String text)
+    {
+        String result = null;
+        if (text.length() > 2)
+        {
+            result = text.substring(0, 1).toUpperCase() + text.substring(1, text.length()).toLowerCase();
+        }
+        else
+        {
+            result = text.toUpperCase();
+        }
+        return result;
+    }
 }
