@@ -85,11 +85,4 @@ public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
             tvCurrentPair.setText(capitalize(imagenCorrecta.get_nombre()));
         }
     }
-
-    public void buttonClick(View v)
-    {
-        ImageButton button = (ImageButton) v;
-        String userSelectedPair = (String) button.getContentDescription();
-        chequearRespuesta(userSelectedPair);
-    }
 }

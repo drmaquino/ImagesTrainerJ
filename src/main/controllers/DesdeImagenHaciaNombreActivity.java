@@ -86,12 +86,4 @@ public class DesdeImagenHaciaNombreActivity extends MultipleChoiceActivity
             }
         }
     }
-
-    @Override
-    public void buttonClick(View v)
-    {
-        Button button = (Button) v;
-        String userSelectedPair = (String) button.getContentDescription();
-        chequearRespuesta(userSelectedPair);
-    }
 }
