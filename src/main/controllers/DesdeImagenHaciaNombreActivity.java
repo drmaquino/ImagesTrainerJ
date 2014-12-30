@@ -64,17 +64,10 @@ public class DesdeImagenHaciaNombreActivity extends MultipleChoiceActivity
         {
             Button pairButton = pairButtons.get(i);
             Imagen imagen = imagenesParaMostrar.get(i);
+            
             pairButton.setContentDescription(imagen.get_nombre());
 
-            String nombre = imagen.get_nombre().split("\\.")[0];
-            if (nombre.length() > 2)
-            {
-                pairButton.setText(nombre.substring(0, 1).toUpperCase() + nombre.substring(1, nombre.length()).toLowerCase());
-            }
-            else
-            {
-                pairButton.setText(nombre.toUpperCase());
-            }
+            pairButton.setText(capitalize(imagen.get_nombre()));
         }
     }
 
@@ -83,15 +76,8 @@ public class DesdeImagenHaciaNombreActivity extends MultipleChoiceActivity
     {
         if (imagenCorrecta != null)
         {
-            String nombre_real;
-            if (!imagenCorrecta.get_descripcion().equals(""))
-            {
-                nombre_real = String.format("%s (%s)", imagenCorrecta.get_nombre(), imagenCorrecta.get_descripcion());
-            }
-            else
-            {
-                nombre_real = imagenCorrecta.get_nombre();
-            }
+            String nombre_real = imagenCorrecta.get_filename();
+            
             Bitmap imgBitmap = ioh.getBitmapFromFolder(carpeta, nombre_real);
 
             if (imgBitmap != null)
