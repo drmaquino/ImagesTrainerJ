@@ -15,12 +15,6 @@ public class DesdeImagenHaciaNombreActivity extends MultipleChoiceActivity
 {
     private ImageView tvCurrentImage;
 
-    private List<Button> pairButtons;
-    private Button btn1;
-    private Button btn2;
-    private Button btn3;
-    private Button btn4;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -40,29 +34,13 @@ public class DesdeImagenHaciaNombreActivity extends MultipleChoiceActivity
     }
 
     @Override
-    protected void localizarRespuestasEnLayout()
-    {
-        pairButtons = new ArrayList<Button>();
-
-        btn1 = (Button) findViewById(R.id.pair_1);
-        btn2 = (Button) findViewById(R.id.pair_2);
-        btn3 = (Button) findViewById(R.id.pair_3);
-        btn4 = (Button) findViewById(R.id.pair_4);
-
-        pairButtons.add(btn1);
-        pairButtons.add(btn2);
-        pairButtons.add(btn3);
-        pairButtons.add(btn4);
-    }
-
-    @Override
     protected void mostrarRespuestasPosibles()
     {
         Collections.shuffle(imagenesParaMostrar);
 
         for (int i = 0; i < imagenesParaMostrar.size(); i++)
         {
-            Button pairButton = pairButtons.get(i);
+            Button pairButton = (Button) respuestasButtons.get(i);
             Imagen imagen = imagenesParaMostrar.get(i);
             
             pairButton.setContentDescription(imagen.get_nombre());

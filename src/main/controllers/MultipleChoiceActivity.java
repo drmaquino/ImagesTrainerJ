@@ -27,6 +27,12 @@ public abstract class MultipleChoiceActivity extends Activity
 
     protected TextView tvCurrentResueltas;
     protected TextView tvCurrentPendientes;
+    
+    protected List<View> respuestasButtons;
+    protected View btn1;
+    protected View btn2;
+    protected View btn3;
+    protected View btn4;
 
     protected List<Imagen> imagenesPendientes;
     protected List<Imagen> imagenesResueltas;
@@ -89,7 +95,20 @@ public abstract class MultipleChoiceActivity extends Activity
 
     protected abstract void localizarPreguntaEnLayout();
 
-    protected abstract void localizarRespuestasEnLayout();
+    protected void localizarRespuestasEnLayout()
+    {
+        respuestasButtons = new ArrayList<View>();
+
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        btn3 = findViewById(R.id.btn3);
+        btn4 = findViewById(R.id.btn4);
+
+        respuestasButtons.add(btn1);
+        respuestasButtons.add(btn2);
+        respuestasButtons.add(btn3);
+        respuestasButtons.add(btn4);
+    }
 
     protected void inicializarCarpeta()
     {

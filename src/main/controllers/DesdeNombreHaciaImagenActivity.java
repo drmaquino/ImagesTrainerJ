@@ -15,12 +15,6 @@ public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
 {
     private TextView tvCurrentPair;
 
-    private List<ImageButton> imageButtons;
-    private ImageButton btn1;
-    private ImageButton btn2;
-    private ImageButton btn3;
-    private ImageButton btn4;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -40,29 +34,14 @@ public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
     }
 
     @Override
-    protected void localizarRespuestasEnLayout()
-    {
-        imageButtons = new ArrayList<ImageButton>();
-
-        btn1 = (ImageButton) findViewById(R.id.btn1);
-        btn2 = (ImageButton) findViewById(R.id.btn2);
-        btn3 = (ImageButton) findViewById(R.id.btn3);
-        btn4 = (ImageButton) findViewById(R.id.btn4);
-
-        imageButtons.add(btn1);
-        imageButtons.add(btn2);
-        imageButtons.add(btn3);
-        imageButtons.add(btn4);
-    }
-
-    @Override
     protected void mostrarRespuestasPosibles()
     {
         Collections.shuffle(imagenesParaMostrar);
 
         for (int i = 0; i < imagenesParaMostrar.size(); i++)
         {
-            ImageButton imageButton = imageButtons.get(i);
+//            ImageButton imageButton = imageButtons.get(i);
+            ImageButton imageButton = (ImageButton) respuestasButtons.get(i);
             Imagen imagen = imagenesParaMostrar.get(i);
 
             String nombre_real = imagen.get_filename();
