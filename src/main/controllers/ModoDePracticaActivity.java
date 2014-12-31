@@ -21,6 +21,8 @@ public class ModoDePracticaActivity extends Activity
 
         desde = (Spinner) findViewById(R.id.spinner_desde);
         hacia = (Spinner) findViewById(R.id.spinner_hacia);
+        
+        hacia.setSelection(hacia.getCount() - 1);
 
         carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
     }
