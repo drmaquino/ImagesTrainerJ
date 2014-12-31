@@ -46,7 +46,11 @@ public class ModoDePracticaActivity extends Activity
         }
         else if (texto_desde.equals("Descripcion") && texto_hacia.equals("Imagen"))
         {
-            intent = new Intent(this, DesdeNombreHaciaImagenActivity.class);            
+            intent = new Intent(this, DesdeDescripcionHaciaImagenActivity.class);            
+        }
+        else if (texto_desde.equals("Imagen") && texto_hacia.equals("Descripcion"))
+        {
+            intent = new Intent(this, DesdeImagenHaciaDescripcionActivity.class);            
         }
         else
         {
@@ -56,8 +60,8 @@ public class ModoDePracticaActivity extends Activity
         if (intent != null)
         {
             intent.putExtra("carpeta", carpeta);
-            intent.putExtra("desde", texto_desde);
-            intent.putExtra("hacia", texto_hacia);
+//            intent.putExtra("desde", texto_desde);
+//            intent.putExtra("hacia", texto_hacia);
             startActivity(intent);
         }
     }

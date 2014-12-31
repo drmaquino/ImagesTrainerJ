@@ -5,8 +5,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_listar_carpetas">Elige una carpeta\:</string>
     <string name="title_activity_modo_de_practica">Modo de práctica</string>
-    <string name="title_activity_encoding">Nombre -> Imagen</string>
-    <string name="title_activity_decoding">Imagen -> Nombre</string>
+    <string name="title_activity_nom_2_ima">Nombre -> Imagen</string>
+    <string name="title_activity_ima_2_nom">Imagen -> Nombre</string>
+    <string name="title_activity_des_2_ima">Descripcion -> Imagen</string>
+    <string name="title_activity_ima_2_des">Imagen -> Descripcion</string>
     <string name="default_description">error</string>
     <string name="btn_comenzar">Comenzar</string>
 

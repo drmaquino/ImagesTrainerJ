@@ -22,8 +22,8 @@ import android.widget.Toast;
 public abstract class MultipleChoiceActivity extends Activity
 {
     protected String carpeta;
-    private String texto_desde;
-    private String texto_hacia;
+//    private String texto_desde;
+//    private String texto_hacia;
 
     protected TextView tvCurrentResueltas;
     protected TextView tvCurrentPendientes;
@@ -117,10 +117,10 @@ public abstract class MultipleChoiceActivity extends Activity
     protected void inicializarCarpeta()
     {
         carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
-
-        // esto no va aca! TODO: mover adonde corresponda!
-        texto_desde = getIntent().getStringExtra("desde");
-        texto_hacia = getIntent().getStringExtra("hacia");
+//
+//        // esto no va aca! TODO: mover adonde corresponda!
+//        texto_desde = getIntent().getStringExtra("desde");
+//        texto_hacia = getIntent().getStringExtra("hacia");
     }
 
     protected void inicializarListas()

@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".DesdeNombreHaciaImagenActivity"
-            android:label="@string/title_activity_encoding"
+            android:label="@string/title_activity_nom_2_ima"
             android:parentActivityName=".ModoDePracticaActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -42,7 +42,23 @@
         </activity>
         <activity
             android:name=".DesdeImagenHaciaNombreActivity"
-            android:label="@string/title_activity_decoding"
+            android:label="@string/title_activity_ima_2_nom"
+            android:parentActivityName=".ModoDePracticaActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="main.controllers.ListarJuegosActivity" />
+        </activity>
+        <activity
+            android:name=".DesdeDescripcionHaciaImagenActivity"
+            android:label="@string/title_activity_des_2_ima"
+            android:parentActivityName=".ModoDePracticaActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="main.controllers.ListarJuegosActivity" />
+        </activity>
+        <activity
+            android:name=".DesdeImagenHaciaDescripcionActivity"
+            android:label="@string/title_activity_ima_2_des"
             android:parentActivityName=".ModoDePracticaActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
