@@ -28,7 +28,8 @@ public abstract class MultipleChoiceActivity extends Activity
     protected TextView tvCurrentResueltas;
     protected TextView tvCurrentPendientes;
     
-    protected List<View> respuestasButtons;
+    protected View pregunta;
+    protected List<View> respuestas;
     protected View btn1;
     protected View btn2;
     protected View btn3;
@@ -93,21 +94,24 @@ public abstract class MultipleChoiceActivity extends Activity
         tvCurrentPendientes = (TextView) findViewById(R.id.current_pendientes);
     }
 
-    protected abstract void localizarPreguntaEnLayout();
+    protected void localizarPreguntaEnLayout()
+    {
+        pregunta = findViewById(R.id.pregunta);
+    }
 
     protected void localizarRespuestasEnLayout()
     {
-        respuestasButtons = new ArrayList<View>();
+        respuestas = new ArrayList<View>();
 
         btn1 = findViewById(R.id.btn1);
         btn2 = findViewById(R.id.btn2);
         btn3 = findViewById(R.id.btn3);
         btn4 = findViewById(R.id.btn4);
 
-        respuestasButtons.add(btn1);
-        respuestasButtons.add(btn2);
-        respuestasButtons.add(btn3);
-        respuestasButtons.add(btn4);
+        respuestas.add(btn1);
+        respuestas.add(btn2);
+        respuestas.add(btn3);
+        respuestas.add(btn4);
     }
 
     protected void inicializarCarpeta()

@@ -1,20 +1,15 @@
 package main.controllers;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import main.model.Imagen;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
 {
-    private TextView tvCurrentPair;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -26,11 +21,15 @@ public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
     {
         setContentView(R.layout.activity_desde_nombre_hacia_imagen);
     }
-
+    
     @Override
-    protected void localizarPreguntaEnLayout()
+    protected void mostrarPregunta()
     {
-        tvCurrentPair = (TextView) findViewById(R.id.current_pair);
+        if (imagenCorrecta != null)
+        {
+            TextView tv = (TextView) pregunta;
+            tv.setText(capitalize(imagenCorrecta.get_nombre()));
+        }
     }
 
     @Override
@@ -40,8 +39,7 @@ public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
 
         for (int i = 0; i < imagenesParaMostrar.size(); i++)
         {
-//            ImageButton imageButton = imageButtons.get(i);
-            ImageButton imageButton = (ImageButton) respuestasButtons.get(i);
+            ImageButton imageButton = (ImageButton) respuestas.get(i);
             Imagen imagen = imagenesParaMostrar.get(i);
 
             String nombre_real = imagen.get_filename();
@@ -53,15 +51,6 @@ public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
                 imageButton.setImageBitmap(imgBitmap);
                 imageButton.setContentDescription(imagen.get_nombre());
             }
-        }
-    }
-
-    @Override
-    protected void mostrarPregunta()
-    {
-        if (imagenCorrecta != null)
-        {
-            tvCurrentPair.setText(capitalize(imagenCorrecta.get_nombre()));
         }
     }
 }
