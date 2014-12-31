@@ -5,10 +5,11 @@ import java.util.Collections;
 import main.model.Imagen;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
+public class DesdeNombreHaciaDescripcionActivity extends MultipleChoiceActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -19,7 +20,7 @@ public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
     @Override
     protected void localizarLayout()
     {
-        setContentView(R.layout.activity_desde_texto_hacia_imagen);
+        setContentView(R.layout.activity_desde_texto_hacia_texto);
     }
     
     @Override
@@ -39,18 +40,13 @@ public class DesdeNombreHaciaImagenActivity extends MultipleChoiceActivity
 
         for (int i = 0; i < imagenesParaMostrar.size(); i++)
         {
-            ImageButton imageButton = (ImageButton) respuestas.get(i);
+            Button pairButton = (Button) respuestas.get(i);
             Imagen imagen = imagenesParaMostrar.get(i);
+            
+            pairButton.setContentDescription(imagen.get_nombre());
 
-            String nombre_real = imagen.get_filename();
-
-            Bitmap imgBitmap = ioh.getBitmapFromFolder(carpeta, nombre_real);
-
-            if (imgBitmap != null)
-            {
-                imageButton.setImageBitmap(imgBitmap);
-                imageButton.setContentDescription(imagen.get_nombre());
-            }
+            String desc = imagen.get_descripcion().equals("") ? imagen.get_nombre() : imagen.get_descripcion();
+            pairButton.setText(capitalize(desc));
         }
     }
 }

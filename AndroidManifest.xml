@@ -64,6 +64,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.controllers.ListarJuegosActivity" />
         </activity>
+        <activity
+            android:name=".DesdeNombreHaciaDescripcionActivity"
+            android:label="@string/title_activity_nom_2_des"
+            android:parentActivityName=".ModoDePracticaActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="main.controllers.ListarJuegosActivity" />
+        </activity>
+        <activity
+            android:name=".DesdeDescripcionHaciaNombreActivity"
+            android:label="@string/title_activity_des_2_nom"
+            android:parentActivityName=".ModoDePracticaActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="main.controllers.ListarJuegosActivity" />
+        </activity>
     </application>
 
 </manifest>

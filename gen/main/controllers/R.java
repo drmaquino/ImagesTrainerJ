@@ -46,11 +46,12 @@ public final class R {
         public static final int spinner_hacia=0x7f090009;
     }
     public static final class layout {
-        public static final int activity_desde_image_hacia_nombre=0x7f030000;
-        public static final int activity_desde_nombre_hacia_imagen=0x7f030001;
-        public static final int activity_listar_carpetas=0x7f030002;
-        public static final int activity_modo_de_practica=0x7f030003;
-        public static final int dialog_custom=0x7f030004;
+        public static final int activity_desde_imagen_hacia_texto=0x7f030000;
+        public static final int activity_desde_texto_hacia_imagen=0x7f030001;
+        public static final int activity_desde_texto_hacia_texto=0x7f030002;
+        public static final int activity_listar_carpetas=0x7f030003;
+        public static final int activity_modo_de_practica=0x7f030004;
+        public static final int dialog_custom=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -58,13 +59,15 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int btn_comenzar=0x7f050009;
-        public static final int default_description=0x7f050008;
+        public static final int btn_comenzar=0x7f05000b;
+        public static final int default_description=0x7f05000a;
         public static final int title_activity_des_2_ima=0x7f050006;
+        public static final int title_activity_des_2_nom=0x7f050009;
         public static final int title_activity_ima_2_des=0x7f050007;
         public static final int title_activity_ima_2_nom=0x7f050005;
         public static final int title_activity_listar_carpetas=0x7f050002;
         public static final int title_activity_modo_de_practica=0x7f050003;
+        public static final int title_activity_nom_2_des=0x7f050008;
         public static final int title_activity_nom_2_ima=0x7f050004;
     }
     public static final class style {

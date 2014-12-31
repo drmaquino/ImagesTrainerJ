@@ -52,6 +52,14 @@ public class ModoDePracticaActivity extends Activity
         {
             intent = new Intent(this, DesdeImagenHaciaDescripcionActivity.class);            
         }
+        else if (texto_desde.equals("Nombre") && texto_hacia.equals("Descripcion"))
+        {
+            intent = new Intent(this, DesdeNombreHaciaDescripcionActivity.class);
+        }
+        else if (texto_desde.equals("Descripcion") && texto_hacia.equals("Nombre"))
+        {
+            intent = new Intent(this, DesdeDescripcionHaciaNombreActivity.class);            
+        }
         else
         {
             Toast.makeText(getBaseContext(), "Combinacion aún no disponible", Toast.LENGTH_SHORT).show();
@@ -60,8 +68,6 @@ public class ModoDePracticaActivity extends Activity
         if (intent != null)
         {
             intent.putExtra("carpeta", carpeta);
-//            intent.putExtra("desde", texto_desde);
-//            intent.putExtra("hacia", texto_hacia);
             startActivity(intent);
         }
     }

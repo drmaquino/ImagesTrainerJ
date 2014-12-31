@@ -19,7 +19,7 @@ public class DesdeDescripcionHaciaImagenActivity extends MultipleChoiceActivity
     @Override
     protected void localizarLayout()
     {
-        setContentView(R.layout.activity_desde_nombre_hacia_imagen);
+        setContentView(R.layout.activity_desde_texto_hacia_imagen);
     }
     
     @Override

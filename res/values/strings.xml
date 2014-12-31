@@ -9,6 +9,8 @@
     <string name="title_activity_ima_2_nom">Imagen -> Nombre</string>
     <string name="title_activity_des_2_ima">Descripcion -> Imagen</string>
     <string name="title_activity_ima_2_des">Imagen -> Descripcion</string>
+    <string name="title_activity_nom_2_des">Nombre -> Descripcion</string>
+    <string name="title_activity_des_2_nom">Descripcion -> Nombre</string>
     <string name="default_description">error</string>
     <string name="btn_comenzar">Comenzar</string>
 
