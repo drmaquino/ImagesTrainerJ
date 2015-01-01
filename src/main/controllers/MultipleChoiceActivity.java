@@ -12,9 +12,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +19,10 @@ import android.widget.Toast;
 public abstract class MultipleChoiceActivity extends Activity
 {
     protected String carpeta;
-//    private String texto_desde;
-//    private String texto_hacia;
 
     protected TextView tvCurrentResueltas;
     protected TextView tvCurrentPendientes;
-    
+
     protected View pregunta;
     protected List<View> respuestas;
     protected View btn1;
@@ -62,30 +57,6 @@ public abstract class MultipleChoiceActivity extends Activity
         actualizarContadores();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.action_about:
-                crearDialogoAbout().show();
-                return true;
-            case R.id.action_help:
-                crearDialogoHelp().show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     protected abstract void localizarLayout();
 
     protected void localizarContadoresEnLayout()
@@ -117,10 +88,6 @@ public abstract class MultipleChoiceActivity extends Activity
     protected void inicializarCarpeta()
     {
         carpeta = (String) this.getIntent().getCharSequenceExtra("carpeta");
-//
-//        // esto no va aca! TODO: mover adonde corresponda!
-//        texto_desde = getIntent().getStringExtra("desde");
-//        texto_hacia = getIntent().getStringExtra("hacia");
     }
 
     protected void inicializarListas()
@@ -271,45 +238,6 @@ public abstract class MultipleChoiceActivity extends Activity
             }
         });
         return dbNoImages.create();
-    }
-
-    private AlertDialog crearDialogoAbout()
-    {
-        Builder dbAbout = new AlertDialog.Builder(this);
-        dbAbout.setTitle("Images Trainer");
-        String msg = "";
-        msg += "\nCreado por:";
-        msg += "\nMariano Aquino";
-        msg += "\nVersión 1.0";
-        msg += "\n06/12/2014";
-        msg += "\n";
-        dbAbout.setMessage(msg);
-        dbAbout.setNeutralButton("Cerrar", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int whichButton)
-            {
-                dialog.dismiss();
-            }
-        });
-        return dbAbout.create();
-    }
-
-    protected AlertDialog crearDialogoHelp()
-    {
-        Builder dbAbout = new AlertDialog.Builder(this);
-        dbAbout.setTitle("Help");
-        String msg = "";
-        msg += "\nAcá va la ayuda!";
-        msg += "\n";
-        dbAbout.setMessage(msg);
-        dbAbout.setNeutralButton("Cerrar", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int whichButton)
-            {
-                dialog.dismiss();
-            }
-        });
-        return dbAbout.create();
     }
 
     protected String capitalize(String text)
