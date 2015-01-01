@@ -45,7 +45,14 @@ public class IOHelper
 			if (!prefs.getBoolean("firstTime", false))
 			{
 				file = new File(mFolder.getAbsolutePath(), "readme.txt");
-				saveToFile(file, "aca van las carpetas con los archivos de imagen deseados.\nLos formatos aceptados son: jpg, jpeg, y png.", false);
+				String text = "";
+				text += "Aca van las carpetas con los archivos de imagen deseados.\n";
+				text += "Los formatos aceptados son: jpg, jpeg, y png.\n";
+				text += "Los archivos pueden tener una descripcion adicional.\n";
+				text += "La descripcion debe ir en el nombre del archivo, entre parentesis, separada por un espacio.";
+				text += "Ejemplo:";
+				text += "nombre (descripcion).jpeg";
+				saveToFile(file, text, false);
 
 				createExampleFolder();
 
