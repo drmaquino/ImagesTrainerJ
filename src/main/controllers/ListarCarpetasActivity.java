@@ -93,8 +93,7 @@ public class ListarCarpetasActivity extends Activity
                 crearDialogoAbout().show();
                 return true;
             case R.id.action_refresh_db:
-                dbh.regenerateDB();
-                Toast.makeText(getBaseContext(), "Base de datos reiniciada!", Toast.LENGTH_SHORT).show();
+                crearDialogoConfirmarReinicio().show();
                 return true;
             case R.id.action_help:
             	crearDialogoHelp().show();
@@ -140,6 +139,32 @@ public class ListarCarpetasActivity extends Activity
             public void onClick(DialogInterface dialog, int whichButton)
             {
                 dialog.dismiss();
+            }
+        });
+        return dbAbout.create();
+    }
+    
+    private AlertDialog crearDialogoConfirmarReinicio()
+    {
+        Builder dbAbout = new AlertDialog.Builder(this);
+        dbAbout.setTitle("Reiniciar DB");
+        String msg = "Está seguro que desea reiniciar la base de datos?\n";
+        msg += "(Sólo se eliminaran los datos de las prácticas, no los archivos)\n";
+        dbAbout.setMessage(msg);
+        dbAbout.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                dialog.dismiss();
+            }
+        });
+        dbAbout.setPositiveButton("Reiniciar", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                dialog.dismiss();
+                dbh.regenerateDB();
+                Toast.makeText(getBaseContext(), "Base de datos reiniciada!", Toast.LENGTH_SHORT).show();
             }
         });
         return dbAbout.create();
