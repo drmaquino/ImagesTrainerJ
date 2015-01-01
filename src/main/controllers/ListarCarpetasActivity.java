@@ -109,11 +109,11 @@ public class ListarCarpetasActivity extends Activity
         Builder dbAbout = new AlertDialog.Builder(this);
         dbAbout.setTitle("Images Trainer");
         String msg = "";
-        msg += "\nCreado por:";
-        msg += "\nMariano Aquino";
-        msg += "\nVersión 1.0";
-        msg += "\n06/12/2014";
         msg += "\n";
+        msg += "Creado por:\n";
+        msg += "Mariano Aquino\n";
+        msg += "Versión 1.0\n";
+        msg += "06/12/2014\n";
         dbAbout.setMessage(msg);
         dbAbout.setNeutralButton("Cerrar", new DialogInterface.OnClickListener()
         {
@@ -130,12 +130,10 @@ public class ListarCarpetasActivity extends Activity
         Builder dbAbout = new AlertDialog.Builder(this);
         dbAbout.setTitle("Help");
         String msg = "";
-        msg += "\n";
-        msg += "Se ha creado la carpeta \"com.imagestrainer.imagenes\"\n";
+        msg += "Se ha creado la carpeta \"com.imagestrainer.imagenes\" ";
         msg += "en la memoria principal de tu dispositivo.\n";
-        msg += "Toda la información de uso se encuentra en el\n";
-        msg += "archivo \"readme.txt\" en la carpeta creada.";
-        msg += "\n";
+        msg += "Toda la información de uso se encuentra en el ";
+        msg += "archivo \"readme.txt\" en la carpeta creada.\n";
         dbAbout.setMessage(msg);
         dbAbout.setNeutralButton("Cerrar", new DialogInterface.OnClickListener()
         {
