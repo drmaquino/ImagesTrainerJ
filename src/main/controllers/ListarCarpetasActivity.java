@@ -130,7 +130,11 @@ public class ListarCarpetasActivity extends Activity
         Builder dbAbout = new AlertDialog.Builder(this);
         dbAbout.setTitle("Help");
         String msg = "";
-        msg += "\nAcá va la ayuda!";
+        msg += "\n";
+        msg += "Se ha creado la carpeta \"com.imagestrainer.imagenes\"\n";
+        msg += "en la memoria principal de tu dispositivo.\n";
+        msg += "Toda la información de uso se encuentra en el\n";
+        msg += "archivo \"readme.txt\" en la carpeta creada.";
         msg += "\n";
         dbAbout.setMessage(msg);
         dbAbout.setNeutralButton("Cerrar", new DialogInterface.OnClickListener()
