@@ -127,7 +127,7 @@ public class ListarCarpetasActivity extends Activity
     private AlertDialog crearDialogoHelp()
     {
         Builder dbAbout = new AlertDialog.Builder(this);
-        dbAbout.setTitle("Help");
+        dbAbout.setTitle("Ayuda");
         String msg = "";
         msg += "Se ha creado la carpeta \"com.imagestrainer.imagenes\" ";
         msg += "en la memoria principal de tu dispositivo.\n";
@@ -151,7 +151,7 @@ public class ListarCarpetasActivity extends Activity
         String msg = "Está seguro que desea reiniciar la base de datos?\n";
         msg += "(Sólo se eliminaran los datos de las prácticas, no los archivos)\n";
         dbAbout.setMessage(msg);
-        dbAbout.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        dbAbout.setNegativeButton("Cancelar", new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int whichButton)
             {

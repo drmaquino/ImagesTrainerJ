@@ -46,25 +46,25 @@ public class ModoDePracticaActivity extends Activity
         {
             intent = new Intent(this, DesdeNombreHaciaImagenActivity.class);
         }
-        else if (texto_desde.equals("Descripcion") && texto_hacia.equals("Imagen"))
+        else if (texto_desde.equals("Descripción") && texto_hacia.equals("Imagen"))
         {
             intent = new Intent(this, DesdeDescripcionHaciaImagenActivity.class);            
         }
-        else if (texto_desde.equals("Imagen") && texto_hacia.equals("Descripcion"))
+        else if (texto_desde.equals("Imagen") && texto_hacia.equals("Descripción"))
         {
             intent = new Intent(this, DesdeImagenHaciaDescripcionActivity.class);            
         }
-        else if (texto_desde.equals("Nombre") && texto_hacia.equals("Descripcion"))
+        else if (texto_desde.equals("Nombre") && texto_hacia.equals("Descripción"))
         {
             intent = new Intent(this, DesdeNombreHaciaDescripcionActivity.class);
         }
-        else if (texto_desde.equals("Descripcion") && texto_hacia.equals("Nombre"))
+        else if (texto_desde.equals("Descripción") && texto_hacia.equals("Nombre"))
         {
             intent = new Intent(this, DesdeDescripcionHaciaNombreActivity.class);            
         }
         else
         {
-            Toast.makeText(getBaseContext(), "Combinacion aún no disponible", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "Combinación aún no disponible", Toast.LENGTH_SHORT).show();
         }
         
         if (intent != null)
