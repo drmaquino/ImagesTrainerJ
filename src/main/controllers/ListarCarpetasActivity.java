@@ -1,5 +1,6 @@
 package main.controllers;
 
+import java.util.Calendar;
 import java.util.List;
 
 import main.helper.DBHelper;
@@ -35,45 +36,58 @@ public class ListarCarpetasActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_carpetas);
-
-        lvCarpetas = (ListView) findViewById(R.id.listaDeCarpetas);
-
-        ioh = new IOHelper(this);
-        dbh = new DBHelper(this);
-
-        ioh.createGameFolder();
-
-        carpetas = ioh.getListFoldersInGameFolder();
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, carpetas)
+        
+        Calendar c = Calendar.getInstance(); 
+        int day = c.get(Calendar.DAY_OF_YEAR);
+        
+//      Comment this to eliminate trial expiration!!
+//        day = 9999;
+        
+        if (day > 15)
         {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent)
-            {
-                View view = super.getView(position, convertView, parent);
-
-                TextView textView = (TextView) view.findViewById(android.R.id.text1);
-
-                /* YOUR CHOICE OF COLOR */
-                textView.setTextColor(Color.WHITE);
-
-                return view;
-            }
-        };
-        lvCarpetas.setAdapter(adapter);
-
-        lvCarpetas.setOnItemClickListener(new OnItemClickListener()
+            crearDialogoTrialExpiration().show();
+        }
+        else
         {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id)
+            lvCarpetas = (ListView) findViewById(R.id.listaDeCarpetas);
+
+            ioh = new IOHelper(this);
+            dbh = new DBHelper(this);
+
+            ioh.createGameFolder();
+
+            carpetas = ioh.getListFoldersInGameFolder();
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, carpetas)
             {
-                String carpeta = carpetas.get(position);
-                Toast.makeText(getApplicationContext(), "sincronizando \"" + carpeta + "\"...", Toast.LENGTH_SHORT).show();
-                dbh.sincronizarCarpeta(carpeta);
-                Intent intent = new Intent(getApplicationContext(), ModoDePracticaActivity.class);
-                intent.putExtra("carpeta", carpeta);
-                startActivity(intent);
-            }
-        });
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent)
+                {
+                    View view = super.getView(position, convertView, parent);
+
+                    TextView textView = (TextView) view.findViewById(android.R.id.text1);
+
+                    /* YOUR CHOICE OF COLOR */
+                    textView.setTextColor(Color.WHITE);
+
+                    return view;
+                }
+            };
+            lvCarpetas.setAdapter(adapter);
+
+            lvCarpetas.setOnItemClickListener(new OnItemClickListener()
+            {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id)
+                {
+                    String carpeta = carpetas.get(position);
+                    Toast.makeText(getApplicationContext(), "sincronizando \"" + carpeta + "\"...", Toast.LENGTH_SHORT).show();
+                    dbh.sincronizarCarpeta(carpeta);
+                    Intent intent = new Intent(getApplicationContext(), ModoDePracticaActivity.class);
+                    intent.putExtra("carpeta", carpeta);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
@@ -96,7 +110,7 @@ public class ListarCarpetasActivity extends Activity
                 crearDialogoConfirmarReinicio().show();
                 return true;
             case R.id.action_help:
-            	crearDialogoHelp().show();
+                crearDialogoHelp().show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -123,7 +137,7 @@ public class ListarCarpetasActivity extends Activity
         });
         return dbAbout.create();
     }
-    
+
     private AlertDialog crearDialogoHelp()
     {
         Builder dbAbout = new AlertDialog.Builder(this);
@@ -143,7 +157,7 @@ public class ListarCarpetasActivity extends Activity
         });
         return dbAbout.create();
     }
-    
+
     private AlertDialog crearDialogoConfirmarReinicio()
     {
         Builder dbAbout = new AlertDialog.Builder(this);
@@ -165,6 +179,26 @@ public class ListarCarpetasActivity extends Activity
                 dialog.dismiss();
                 dbh.regenerateDB();
                 Toast.makeText(getBaseContext(), "Base de datos reiniciada!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return dbAbout.create();
+    }
+    
+    private AlertDialog crearDialogoTrialExpiration()
+    {
+        Builder dbAbout = new AlertDialog.Builder(this);
+        dbAbout.setTitle("Versión de prueba");
+        String msg = "";
+        msg += "Muchas gracias por utilizar la versión de prueba!\n";
+        msg += "Esta versión ha expirado. ";
+        msg += "Si te ha gustado la aplicación y te gustaría continuar utilizandola, comunicate conmigo!";
+        dbAbout.setMessage(msg);
+        dbAbout.setNeutralButton("Cerrar", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                dialog.dismiss();
+                finish();
             }
         });
         return dbAbout.create();
